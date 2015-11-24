@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,6 +26,9 @@ namespace HueUWP
         public MainPage()
         {
             this.InitializeComponent();
+            Debug.WriteLine(new NetworkHandler().RegisterName("Kaas", "Henk"));
+            Debug.WriteLine(new NetworkHandler().Test());
+
         }
     }
 }
