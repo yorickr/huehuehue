@@ -92,7 +92,7 @@ namespace HueUWP
                 HttpClient client = new HttpClient();
                 //HttpStringContent content = new HttpStringContent($"{{\"devicetype\":\"Test#Test\"}}", Windows.Storage.Streams.UnicodeEncoding.Utf8, "application /json");
 
-                Uri uriLampState = new Uri($"http://{ip}:{port}/api" + path);
+                Uri uriLampState = new Uri($"http://{ip}:{port}/api/" + path);
                 var response = await client.GetAsync(uriLampState).AsTask(cts.Token);
 
                 if (!response.IsSuccessStatusCode)
@@ -122,9 +122,17 @@ namespace HueUWP
             return response;
         }
 
+        public async Task<String> AllLights()
+        {
+            var response = await Get($"{(String)MainPage.LOCAL_SETTINGS.Values["id"]}/lights");
+            if (string.IsNullOrEmpty(response))
+                await new MessageDialog("Error while getting all liights. ….").ShowAsync();
+            return response;
+        }
+
         public async Task<String> Test()
         {
-            var response = await Get( "/111bb033202ac68b5812245c22f77eb/lights");
+            var response = await Get( "111bb033202ac68b5812245c22f77eb/lights");
             if (string.IsNullOrEmpty(response))
                 await new MessageDialog("Error while setting username. ….").ShowAsync();
             return response;

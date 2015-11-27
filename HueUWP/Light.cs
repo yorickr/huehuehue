@@ -12,14 +12,14 @@ namespace HueUWP
 {
     public class Light : INotifyPropertyChanged
     {
-        public int ID { get; private set; }
-        public string Name { get; private set; }
-        public string Type { get; private set; }
+        public int ID { get;  set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
 
-        public bool On { get; private set; }
-        public int Brightness{ get; private set; }
-        public int Hue { get; private set; }
-        public int Saturation { get; private set; }
+        public bool On { get;  set; }
+        public int Brightness{ get; set; }
+        public int Hue { get; set; }
+        public int Saturation { get; set; }
  
         public Light()
         {
@@ -64,10 +64,6 @@ namespace HueUWP
 
         public static ObservableCollection<Light> GetLights()
         {
-            if (_lights.Count == 0)
-            {
-                _lights.Add(new Light());
-            }
             return _lights;
         }
     }

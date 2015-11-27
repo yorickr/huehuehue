@@ -45,6 +45,8 @@ namespace HueUWP
             NetworkHandler nwh = new NetworkHandler();
             APIHandler api = new APIHandler(nwh);
             //api.Register();
+            api.GetAllLights(_lightsViewModel);
+            
             Debug.WriteLine(LOCAL_SETTINGS.Values["id"]);
 
         }
