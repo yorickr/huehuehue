@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="BindingToCommandsUWP.MainPage"
+    x:Class="HueUWP.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:BindingToCommandsUWP"
@@ -11,7 +11,7 @@
 
     <Grid>
         <StackPanel Margin="20,40,20,40">
-            <ListView x:Name="myListView" ItemsSource="{Binding}" >
+            <ListView x:Name="myListView" ItemsSource="{Binding}"  >
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="dataTemplate">
                         <StackPanel Orientation="Horizontal">

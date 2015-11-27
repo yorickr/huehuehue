@@ -1,4 +1,3 @@
-﻿using HueUWP;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace BindingToCommandsUWP
+namespace HueUWP
 {
 
 
@@ -28,6 +28,8 @@ namespace BindingToCommandsUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static ApplicationDataContainer LOCAL_SETTINGS = ApplicationData.Current.LocalSettings;
+
         private ObservableCollection<Light> _lightsViewModel = LightDataSource.GetLights();
 
         public ObservableCollection<Light> LightsViewModel
@@ -38,8 +40,13 @@ namespace BindingToCommandsUWP
         public MainPage()
         {
             this.InitializeComponent();
-            Debug.WriteLine(new NetworkHandler().RegisterName("Kaas", "Henk"));
-            Debug.WriteLine(new NetworkHandler().Test());
+            LOCAL_SETTINGS.Values["ip"] = "localhost";
+            LOCAL_SETTINGS.Values["port"] = 8000;
+            NetworkHandler nwh = new NetworkHandler();
+            APIHandler api = new APIHandler(nwh);
+            //api.Register();
+            Debug.WriteLine(LOCAL_SETTINGS.Values["id"]);
+
         }
 
         private void ColorChanged(object sender, RoutedEventArgs e)
@@ -57,5 +64,6 @@ namespace BindingToCommandsUWP
 
             light.UpdateState(button.IsOn);
         }
+
     }
 }
