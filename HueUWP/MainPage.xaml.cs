@@ -28,11 +28,11 @@ namespace BindingToCommandsUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private ObservableCollection<Light> _carsViewModel = LightDataSource.GetCars();
+        private ObservableCollection<Light> _lightsViewModel = LightDataSource.GetLights();
 
-        public ObservableCollection<Light> CarsViewModel
+        public ObservableCollection<Light> LightsViewModel
         {
-            get { return this._carsViewModel; }
+            get { return this._lightsViewModel; }
         }
 
         public MainPage()
@@ -42,13 +42,20 @@ namespace BindingToCommandsUWP
             Debug.WriteLine(new NetworkHandler().Test());
         }
 
-        private void CheckInButton_Click(object sender, RoutedEventArgs e)
+        private void ColorChanged(object sender, RoutedEventArgs e)
         {
             Button button = ((Button)sender);
             Light light = (Light)button.DataContext;
 
-            light.CheckInCar();
+            light.UpdateColor(10, 10, 10);
         }
 
+        private void ToggleSwitch_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ToggleSwitch button = ((ToggleSwitch)sender);
+            Light light = (Light)button.DataContext;
+
+            light.UpdateState(button.IsOn);
+        }
     }
 }

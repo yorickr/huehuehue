@@ -5,7 +5,8 @@
     xmlns:local="using:BindingToCommandsUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    DataContext="{Binding CarsViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    DataContext="{Binding LightsViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d">
 
     <Grid>
@@ -14,21 +15,18 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="dataTemplate">
                         <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="20" Height="20" Fill="Red" Margin="20, 0,0,0" />
+
                             <StackPanel Orientation="Vertical" Width="110" Margin="0,0,0,20">
-                                <TextBlock Text="{Binding Make}" FontSize="24" />
-                                <TextBlock Text="{Binding Model}" FontSize="24" />
+                                <TextBlock Text="{Binding Name}" FontSize="24" />
+                                <TextBlock Text="{Binding Type}" FontSize="14" />
                             </StackPanel>
 
-                            <Button Content="Check In" 
-                                    Width="100" 
-                                    Height="50" 
-                                    Margin="0,0,20,0"
-                                    Click="CheckInButton_Click"
+                            <ToggleSwitch Tapped="ToggleSwitch_Tapped">
+                                <ToggleSwitch.OffContent>Off</ToggleSwitch.OffContent>
+                                <ToggleSwitch.OnContent>On</ToggleSwitch.OnContent>
+                            </ToggleSwitch>
                                     
-                                    />
-
-                            <TextBlock Text="{Binding CheckedInDateTime}" 
-                                       FontSize="24" />
 
                         </StackPanel>
                     </DataTemplate>
