@@ -1,16 +1,17 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace HueUWP
+namespace BindingToCommandsUWP
 {
     class APIHandler
     {
-        public static ApplicationData APP_DATA = ApplicationData.Current;
-        public static ApplicationDataContainer LOCAL_SETTINGS = APP_DATA.LocalSettings;
+        
 
         NetworkHandler nwh;
         public APIHandler(NetworkHandler nwh)
@@ -18,10 +19,18 @@ namespace HueUWP
             this.nwh = nwh;
         }
 
-        public void Register()
+        private JObject ObjectifyfJson(string json)
         {
-            string id = nwh.RegisterName("Hue", "Kenneth&Yorick").ToString();
-            //write to file;
+            json = json.Replace("[", "").Replace("]", "");
+            return JObject.Parse(json);
+        }
+
+        public async void Register()
+        {
+            var json = await nwh.RegisterName("Hue", "Kenneth&Yorick");
+            JObject o = ObjectifyfJson(json);
+            string id= o["success"]["username"].ToString();
+            MainPage.LOCAL_SETTINGS.Values["id"] = id;
         }
     }
 }

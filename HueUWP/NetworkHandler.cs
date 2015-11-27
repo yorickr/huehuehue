@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.Web.Http;
 
-namespace HueUWP
+namespace BindingToCommandsUWP
 {
     class NetworkHandler
     {
-        private async Task<String> Put(string ip, int port, string path, string json)
+        string ip;
+        int port;
+        public NetworkHandler()
+        {
+            this.ip = (string) MainPage.LOCAL_SETTINGS.Values["ip"];
+            this.port = (int)MainPage.LOCAL_SETTINGS.Values["port"];
+        }
+
+        private async Task<String> Put(string path, string json)
         {
             var cts = new CancellationTokenSource();
             cts.CancelAfter(5000);
@@ -31,7 +39,7 @@ namespace HueUWP
 
                 string jsonResponse = await response.Content.ReadAsStringAsync();
 
-                System.Diagnostics.Debug.WriteLine(jsonResponse);
+                //System.Diagnostics.Debug.WriteLine(jsonResponse);
 
                 return jsonResponse;
             }
@@ -43,7 +51,7 @@ namespace HueUWP
         }
 
 
-        private async Task<String> Post(string ip, int port, string path, string json)
+        private async Task<String> Post(string path, string json)
         {
             var cts = new CancellationTokenSource();
             cts.CancelAfter(5000);
@@ -63,7 +71,7 @@ namespace HueUWP
 
                 string jsonResponse = await response.Content.ReadAsStringAsync();
 
-                System.Diagnostics.Debug.WriteLine(jsonResponse);
+                //System.Diagnostics.Debug.WriteLine(jsonResponse);
 
                 return jsonResponse;
             }
@@ -74,7 +82,7 @@ namespace HueUWP
             }
         }
 
-        private async Task<String> Get(string ip, int port, string path)
+        private async Task<String> Get(string path)
         {
             var cts = new CancellationTokenSource();
             cts.CancelAfter(5000);
@@ -94,7 +102,7 @@ namespace HueUWP
 
                 string jsonResponse = await response.Content.ReadAsStringAsync();
 
-                System.Diagnostics.Debug.WriteLine(jsonResponse);
+                //System.Diagnostics.Debug.WriteLine(jsonResponse);
 
                 return jsonResponse;
             }
@@ -106,18 +114,20 @@ namespace HueUWP
         }
 
 
-        public async Task RegisterName(string AppName, string UserName)
+        public async Task<String> RegisterName(string AppName, string UserName)
         {
-            var response = await Post("localhost",8000,"",$"{{\"devicetype\":\"{AppName}#{UserName}\"}}");
+            var response = await Post("",$"{{\"devicetype\":\"{AppName}#{UserName}\"}}");
             if (string.IsNullOrEmpty(response))
                 await new MessageDialog("Error while setting username. ….").ShowAsync();
+            return response;
         }
 
-        public async Task Test()
+        public async Task<String> Test()
         {
-            var response = await Get("localhost", 8000, "/111bb033202ac68b5812245c22f77eb/lights");
+            var response = await Get( "/111bb033202ac68b5812245c22f77eb/lights");
             if (string.IsNullOrEmpty(response))
                 await new MessageDialog("Error while setting username. ….").ShowAsync();
+            return response;
         }
 
 

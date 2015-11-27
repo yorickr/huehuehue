@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="HueUWP.App"
+    x:Class="BindingToCommandsUWP.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:HueUWP"
+    xmlns:local="using:BindingToCommandsUWP"
     RequestedTheme="Light">
 
 </Application>
