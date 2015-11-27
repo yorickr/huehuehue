@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace HueUWP
+namespace BindingToCommandsUWP
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -43,7 +43,7 @@ namespace HueUWP
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
+                this.DebugSettings.EnableFrameRateCounter = false;
             }
 #endif
 
