@@ -59,13 +59,22 @@ namespace HueUWP
             light.UpdateColor(10, 10, 10);
         }
 
-        private void ToggleSwitch_Tapped(object sender, TappedRoutedEventArgs e)
+        public void ToggleSwitch_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            Debug.WriteLine("Hello again");
             ToggleSwitch button = ((ToggleSwitch)sender);
             Light light = (Light)button.DataContext;
-
+            Debug.WriteLine("Hello");
             light.UpdateState(button.IsOn);
         }
 
+        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Hello again");
+            ToggleSwitch button = ((ToggleSwitch)sender);
+            Light light = (Light)button.DataContext;
+            Debug.WriteLine("Hello");
+            light.UpdateState(button.IsOn);
+        }
     }
 }

@@ -9,7 +9,7 @@ using Windows.Web.Http;
 
 namespace HueUWP
 {
-    class NetworkHandler
+    public class NetworkHandler
     {
         string ip;
         int port;
@@ -24,13 +24,15 @@ namespace HueUWP
             var cts = new CancellationTokenSource();
             cts.CancelAfter(5000);
 
+            //System.Diagnostics.Debug.WriteLine("PUT:\n" + path +"\n"+json);
+
             try
             {
                 HttpClient client = new HttpClient();
                 HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application /json");
 
-                Uri uriLampState = new Uri($"http://{ip}:{port}/api" + path);
-                var response = await client.PostAsync(uriLampState, content).AsTask(cts.Token);
+                Uri uriLampState = new Uri($"http://{ip}:{port}/api/" + path);
+                var response = await client.PutAsync(uriLampState, content).AsTask(cts.Token);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -61,7 +63,7 @@ namespace HueUWP
                 HttpClient client = new HttpClient();
                 HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application /json");
 
-                Uri uriLampState = new Uri($"http://{ip}:{port}/api" + path);
+                Uri uriLampState = new Uri($"http://{ip}:{port}/api/" + path);
                 var response = await client.PostAsync(uriLampState, content).AsTask(cts.Token);
 
                 if (!response.IsSuccessStatusCode)
@@ -113,6 +115,12 @@ namespace HueUWP
             }
         }
 
+        public async Task<String> ToggleLight(int lightid, string json)
+        {
+            var response = await Put($"{(String)MainPage.LOCAL_SETTINGS.Values["id"]}/lights/{lightid}/state", json);
+            return response;
+        }
+
 
         public async Task<String> RegisterName(string AppName, string UserName)
         {
@@ -126,7 +134,7 @@ namespace HueUWP
         {
             var response = await Get($"{(String)MainPage.LOCAL_SETTINGS.Values["id"]}/lights");
             if (string.IsNullOrEmpty(response))
-                await new MessageDialog("Error while getting all liights. ….").ShowAsync();
+                await new MessageDialog("Error while getting all lights. ….").ShowAsync();
             return response;
         }
 

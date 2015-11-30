@@ -20,10 +20,11 @@ namespace HueUWP
         public int Brightness{ get; set; }
         public int Hue { get; set; }
         public int Saturation { get; set; }
+
+        public APIHandler api { get; set; }
  
         public Light()
         {
-            Debug.WriteLine("Get lamp data on creation or something");
             //temp
             ID = 1;
             Name = "Lamp 1";
@@ -37,7 +38,8 @@ namespace HueUWP
         public void UpdateState(bool on)
         {
             NotifyPropertyChanged(nameof(UpdateState));
-            Debug.WriteLine(on);
+            this.On = on;
+            api.SetLightData(this);
             
         }
 
