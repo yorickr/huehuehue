@@ -34,11 +34,20 @@ namespace HueUWP
             }
         }
 
-        public async void SetLightData(Light l)
+        public async void SetLightState(Light l)
         {
-            
-            var json = await nwh.ToggleLight(l.ID, $"{{\"on\": {((l.On) ? "true" : "false")},\"bri\": {l.Brightness},\"hue\": { l.Hue},\"sat\": {l.Saturation}}}");
+            var json = await nwh.SetLightInfo(l.ID, $"{{\"on\": {((l.IsOn) ? "true" : "false")}}}");
             Debug.WriteLine(json);
+        }
+
+        public async void SetLightValues(Light l)
+        {
+            if(l.IsOn)
+            {
+                var json = await nwh.SetLightInfo(l.ID, $"{{\"bri\": {l.Brightness},\"hue\": {l.Hue},\"sat\": {l.Saturation}}}");
+                Debug.WriteLine(json);
+            }
+            
         }
 
         public async void GetAllLights(ObservableCollection<Light> alllights)
@@ -54,7 +63,7 @@ namespace HueUWP
                 {
                     var light = o["" + i];
                     var state = light["state"];
-                    alllights.Add(new Light() { api = this,ID = i, Brightness = (int)state["bri"], On = (bool)state["on"], Hue = (int)state["hue"], Saturation = (int)state["sat"], Name = (string)light["name"], Type = (string)light["type"] });
+                    alllights.Add(new Light() { api = this,ID = i, Brightness = (int)state["bri"], IsOn = (string)state["on"] == "true" ? true : false, Hue = (int)state["hue"], Saturation = (int)state["sat"], Name = (string)light["name"], Type = (string)light["type"] });
                     Debug.WriteLine("Added light number " + i);
                 } }
             catch(Exception e)

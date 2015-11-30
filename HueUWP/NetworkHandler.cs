@@ -115,7 +115,7 @@ namespace HueUWP
             }
         }
 
-        public async Task<String> ToggleLight(int lightid, string json)
+        public async Task<String> SetLightInfo(int lightid, string json)
         {
             var response = await Put($"{(String)MainPage.LOCAL_SETTINGS.Values["id"]}/lights/{lightid}/state", json);
             return response;

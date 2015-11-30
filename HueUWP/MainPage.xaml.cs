@@ -70,11 +70,16 @@ namespace HueUWP
 
         private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Hello again");
             ToggleSwitch button = ((ToggleSwitch)sender);
             Light light = (Light)button.DataContext;
-            Debug.WriteLine("Hello");
             light.UpdateState(button.IsOn);
+        }
+
+        private void slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            Slider slider = ((Slider)sender);
+            Light l = (Light)slider.DataContext;
+            l.UpdateColor((int)slider.Value, 255, 255);
         }
     }
 }

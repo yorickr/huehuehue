@@ -16,36 +16,32 @@ namespace HueUWP
         public string Name { get; set; }
         public string Type { get; set; }
 
-        public bool On { get;  set; }
-        public int Brightness{ get; set; }
-        public int Hue { get; set; }
-        public int Saturation { get; set; }
+        public bool IsOn { get;  set; }
+        public double Brightness{ get; set; }
+        public double Hue { get; set; }
+        public double Saturation { get; set; }
 
         public APIHandler api { get; set; }
  
         public Light()
-        {
-            //temp
-            ID = 1;
-            Name = "Lamp 1";
-            Type = "Extended color light";
-            On = true;
-            Brightness = 10;
-            Hue = 14215;
-            Saturation = 425;
+        { 
         }
 
         public void UpdateState(bool on)
         {
             NotifyPropertyChanged(nameof(UpdateState));
-            this.On = on;
-            api.SetLightData(this);
+            this.IsOn = on;
+            api.SetLightState(this);
             
         }
 
         public void UpdateColor(int r, int g, int b)
         {
             NotifyPropertyChanged(nameof(UpdateColor));
+            double h; double s; double v;
+            ColorUtil.RGBtoHSV(r,g,b, out h,out s,out v);
+            this.Hue = h; this.Saturation = s; this.Brightness = v;
+            api.SetLightValues(this);
             Debug.WriteLine(r + "-" + g + "-" + b);
         }
 

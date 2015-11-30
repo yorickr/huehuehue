@@ -22,10 +22,11 @@
                                 <TextBlock Text="{Binding Type}" FontSize="14" />
                             </StackPanel>
 
-                            <ToggleSwitch Toggled="ToggleSwitch_Toggled">
+                            <ToggleSwitch Toggled="ToggleSwitch_Toggled" >
                                 <ToggleSwitch.OffContent>Off</ToggleSwitch.OffContent>
                                 <ToggleSwitch.OnContent>On</ToggleSwitch.OnContent>
                             </ToggleSwitch>
+                            <Slider x:Name="slider" Maximum="255" Minimum="0" Width="100" ValueChanged="slider_ValueChanged" />
                                     
 
                         </StackPanel>
@@ -33,6 +34,7 @@
                 </ListView.ItemTemplate>
 
             </ListView>
+            
         </StackPanel>
 
     </Grid>
