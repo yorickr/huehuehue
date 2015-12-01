@@ -3,11 +3,16 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:HueUWP"
+    xmlns:convert="using:HueUWP.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     DataContext="{Binding LightsViewModel, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <convert:BooleanToStringConverter x:Key="BooltostringC"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -35,7 +40,7 @@
                                 <TextBlock Text="{Binding Type}" FontSize="14" />
                             </StackPanel>
 
-                            <ToggleSwitch Margin="40,0,0,0" Toggled="ToggleSwitch_Toggled" IsOn="{Binding IsOn}">
+                            <ToggleSwitch Margin="40,0,0,0" Toggled="ToggleSwitch_Toggled" IsOn="{Binding IsOn, Converter={StaticResource BooltostringC}}">
                                 <ToggleSwitch.OffContent>Off</ToggleSwitch.OffContent>
                                 <ToggleSwitch.OnContent>On</ToggleSwitch.OnContent>
                             </ToggleSwitch>
