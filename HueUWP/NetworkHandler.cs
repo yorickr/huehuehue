@@ -11,12 +11,12 @@ namespace HueUWP
 {
     public class NetworkHandler
     {
-        string ip;
-        int port;
+        //string (string) MainPage.LOCAL_SETTINGS.Values["ip"];
+        //int (int)MainPage.LOCAL_SETTINGS.Values["port"];
         public NetworkHandler()
         {
-            this.ip = (string) MainPage.LOCAL_SETTINGS.Values["ip"];
-            this.port = (int)MainPage.LOCAL_SETTINGS.Values["port"];
+            //this.(string) MainPage.LOCAL_SETTINGS.Values["ip"] = (string) MainPage.LOCAL_SETTINGS.Values["(string) MainPage.LOCAL_SETTINGS.Values["ip"]"];
+            //this.(int)MainPage.LOCAL_SETTINGS.Values["port"] = (int)MainPage.LOCAL_SETTINGS.Values["(int)MainPage.LOCAL_SETTINGS.Values["port"]"];
         }
 
         private async Task<String> Put(string path, string json)
@@ -31,7 +31,7 @@ namespace HueUWP
                 HttpClient client = new HttpClient();
                 HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application /json");
 
-                Uri uriLampState = new Uri($"http://{ip}:{port}/api/" + path);
+                Uri uriLampState = new Uri($"http://{(string) MainPage.LOCAL_SETTINGS.Values["ip"]}:{(int)MainPage.LOCAL_SETTINGS.Values["port"]}/api/" + path);
                 var response = await client.PutAsync(uriLampState, content).AsTask(cts.Token);
 
                 if (!response.IsSuccessStatusCode)
@@ -63,7 +63,7 @@ namespace HueUWP
                 HttpClient client = new HttpClient();
                 HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application /json");
 
-                Uri uriLampState = new Uri($"http://{ip}:{port}/api/" + path);
+                Uri uriLampState = new Uri($"http://{(string) MainPage.LOCAL_SETTINGS.Values["ip"]}:{(int)MainPage.LOCAL_SETTINGS.Values["port"]}/api/" + path);
                 var response = await client.PostAsync(uriLampState, content).AsTask(cts.Token);
 
                 if (!response.IsSuccessStatusCode)
@@ -94,7 +94,7 @@ namespace HueUWP
                 HttpClient client = new HttpClient();
                 //HttpStringContent content = new HttpStringContent($"{{\"devicetype\":\"Test#Test\"}}", Windows.Storage.Streams.UnicodeEncoding.Utf8, "application /json");
 
-                Uri uriLampState = new Uri($"http://{ip}:{port}/api/" + path);
+                Uri uriLampState = new Uri($"http://{(string) MainPage.LOCAL_SETTINGS.Values["ip"]}:{(int)MainPage.LOCAL_SETTINGS.Values["port"]}/api/" + path);
                 var response = await client.GetAsync(uriLampState).AsTask(cts.Token);
 
                 if (!response.IsSuccessStatusCode)
