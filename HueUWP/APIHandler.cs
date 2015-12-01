@@ -44,7 +44,8 @@ namespace HueUWP
         {
             if(l.IsOn)
             {
-                var json = await nwh.SetLightInfo(l.ID, $"{{\"bri\": {l.Brightness-1},\"hue\": {(l.Hue/360)*65535},\"sat\": {l.Saturation*254}}}");
+                Debug.WriteLine(l.Hue);
+                var json = await nwh.SetLightInfo(l.ID, $"{{\"bri\": {l.Brightness},\"hue\": {(l.Hue)},\"sat\": {l.Saturation}}}");
                 Debug.WriteLine(json);
             }
             

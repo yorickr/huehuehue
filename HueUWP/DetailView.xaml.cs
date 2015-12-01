@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -33,6 +34,22 @@ namespace HueUWP
         {
             l = e.Parameter as Light;
             this.DataContext = l;
+        }
+
+
+        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            //l.UpdateColor();
+        }
+
+        private void Slider_DragLeave(object sender, DragEventArgs e)
+        {
+            l.UpdateColor();
+        }
+
+        private void Slider_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
+        {
+            l.UpdateColor();
         }
     }
 }

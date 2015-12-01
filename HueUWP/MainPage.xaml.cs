@@ -54,8 +54,6 @@ namespace HueUWP
         {
             Button button = ((Button)sender);
             Light light = (Light)button.DataContext;
-
-            light.UpdateColor(10, 10, 10);
         }
 
         public void ToggleSwitch_Tapped(object sender, TappedRoutedEventArgs e)
@@ -72,7 +70,6 @@ namespace HueUWP
             ToggleSwitch button = ((ToggleSwitch)sender);
             Light light = (Light)button.DataContext;
             light.UpdateState(button.IsOn);
-            light.UpdateColor(0, 38, 255);
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)

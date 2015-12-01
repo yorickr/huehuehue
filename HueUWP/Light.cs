@@ -41,16 +41,17 @@ namespace HueUWP
             
         }
 
-        public void UpdateColor(int r, int g, int b)
+        public void UpdateColor()
         {
-            NotifyPropertyChanged(nameof(UpdateColor));
-            double h; double s; double v;
-            ColorUtil.RGBtoHSV(r,g,b, out h,out s,out v);
-            this.Hue = h; this.Saturation = s; this.Brightness = v;
             api.SetLightValues(this);
-            Debug.WriteLine(r + "-" + g + "-" + b);
-            Debug.WriteLine(h + "-" + s + "-" + v);
-            NotifyPropertyChanged(nameof(UpdateColor));
+        }
+
+        public void UpdateColor(int h, int s, int b)
+        {
+            //double h; double s; double v;
+            //ColorUtil.RGBtoHSV(r,g,b, out h,out s,out v);
+            this.Hue = h; this.Saturation = s; this.Brightness = b;
+            api.SetLightValues(this);
         }
 
 
