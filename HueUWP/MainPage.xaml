@@ -11,7 +11,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <convert:BooleanToStringConverter x:Key="BooltostringC"/>
+        <convert:NullableBooleanConverter x:Key="BoolConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -29,18 +29,18 @@
         </RelativePanel>
         
         <StackPanel Grid.Row="1" Margin="20,40,20,40">
-            <ListView x:Name="myListView" ItemsSource="{Binding}"  >
+            <ListView x:Name="myListView" ItemsSource="{Binding}" IsItemClickEnabled="True" ItemClick="myListView_ItemClick">
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="dataTemplate">
                         <StackPanel Orientation="Horizontal">
-                            <Rectangle Width="20" Height="20" Fill="Red" Margin="20, 0,0,0" />
+                            <Rectangle Width="20" Height="20" Fill="{Binding Color}" Margin="20, 0,0,0" />
 
                             <StackPanel Orientation="Vertical" Width="200" Margin="20,0,0,0">
                                 <TextBlock Text="{Binding Name}" FontSize="24" />
                                 <TextBlock Text="{Binding Type}" FontSize="14" />
                             </StackPanel>
 
-                            <ToggleSwitch Margin="40,0,0,0" Toggled="ToggleSwitch_Toggled" IsOn="{Binding IsOn, Converter={StaticResource BooltostringC}}">
+                            <ToggleSwitch Margin="40,0,0,0" Toggled="ToggleSwitch_Toggled" IsOn="{Binding IsOn, Converter={StaticResource BoolConverter}}">
                                 <ToggleSwitch.OffContent>Off</ToggleSwitch.OffContent>
                                 <ToggleSwitch.OnContent>On</ToggleSwitch.OnContent>
                             </ToggleSwitch>

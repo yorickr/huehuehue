@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Xaml.Media;
 
 namespace HueUWP
 {
@@ -22,7 +23,12 @@ namespace HueUWP
         public double Saturation { get; set; }
 
         public APIHandler api { get; set; }
- 
+
+        public SolidColorBrush Color
+        {
+            get { return new SolidColorBrush(HueUWP.ColorUtil.HsvToRgb(Hue, Saturation, Brightness)); }
+        }
+
         public Light()
         { 
         }
@@ -43,6 +49,8 @@ namespace HueUWP
             this.Hue = h; this.Saturation = s; this.Brightness = v;
             api.SetLightValues(this);
             Debug.WriteLine(r + "-" + g + "-" + b);
+            Debug.WriteLine(h + "-" + s + "-" + v);
+            NotifyPropertyChanged(nameof(UpdateColor));
         }
 
 

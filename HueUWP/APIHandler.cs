@@ -44,7 +44,7 @@ namespace HueUWP
         {
             if(l.IsOn)
             {
-                var json = await nwh.SetLightInfo(l.ID, $"{{\"bri\": {l.Brightness},\"hue\": {l.Hue},\"sat\": {l.Saturation}}}");
+                var json = await nwh.SetLightInfo(l.ID, $"{{\"bri\": {l.Brightness-1},\"hue\": {(l.Hue/360)*65535},\"sat\": {l.Saturation*254}}}");
                 Debug.WriteLine(json);
             }
             
@@ -55,16 +55,14 @@ namespace HueUWP
             List<Light> lightlist = new List<Light>();
             try {
                 var json = await nwh.AllLights();
-                Debug.WriteLine(json);
                 JObject o = JObject.Parse(json);
-                Debug.WriteLine(o.ToString());
 
                 for (int i = 1; i <= o.Count; i++)
                 {
                     var light = o["" + i];
                     var state = light["state"];
-                    alllights.Add(new Light() { api = this,ID = i, Brightness = (int)state["bri"], IsOn = (string)state["on"] == "true" ? true : false, Hue = (int)state["hue"], Saturation = (int)state["sat"], Name = (string)light["name"], Type = (string)light["type"] });
-                    Debug.WriteLine("Added light number " + i);
+                    alllights.Add(new Light() { api = this,ID = i, Brightness = (int)state["bri"], IsOn = ((string)state["on"]).ToLower() == "true" ? true : false, Hue = (int)state["hue"], Saturation = (int)state["sat"], Name = (string)light["name"], Type = (string)light["type"] });
+                    Debug.WriteLine("Added light number " + i + " " + state["on"]);
                 } }
             catch(Exception e)
             {

@@ -7,25 +7,25 @@ using Windows.UI.Xaml.Data;
 
 namespace HueUWP.Converters
 {
-    public class BooleanToStringConverter : IValueConverter
+    public class NullableBooleanConverter : IValueConverter
     {
         //From bool to nullable
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             bool b = (bool)value;
-            return b.ToString();
+            bool? be = b as bool?;
+            return be;
         }
 
         //From nullable to bool
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            string s = (string)value;
-            bool b = false;
+            bool? b = (bool?)value;
+            bool be = false;
+            if (b.HasValue)
+                be = (bool)b;
 
-            if (s == "true")
-                b = true;
-
-            return b;
+            return be;
         }
     }
 }

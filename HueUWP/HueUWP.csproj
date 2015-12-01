@@ -98,7 +98,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ColorUtil.cs" />
-    <Compile Include="Converters\BooleanToStringConverter.cs" />
+    <Compile Include="Converters\NullableBooleanConverter.cs" />
     <Compile Include="DetailView.xaml.cs">
       <DependentUpon>DetailView.xaml</DependentUpon>
     </Compile>

@@ -22,9 +22,17 @@ namespace HueUWP
     /// </summary>
     public sealed partial class DetailView : Page
     {
+        Light l;
+
         public DetailView()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            l = e.Parameter as Light;
+            this.DataContext = l;
         }
     }
 }
