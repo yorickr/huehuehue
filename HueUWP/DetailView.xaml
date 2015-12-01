@@ -17,6 +17,12 @@
             <RelativePanel Grid.Row="0">
                 <TextBlock RelativePanel.AlignLeftWithPanel="True" FontSize="24" Margin="20,10,0,0" Text="{Binding Name}"/>
             </RelativePanel>
+
+            <StackPanel Grid.Row="1">
+                <Slider Maximum="65535" Value="{Binding Hue}" />
+                <Slider Maximum="254" Value="{Binding Saturation}" />
+                <Slider Maximum="254" Value="{Binding Brightness}" />
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>
