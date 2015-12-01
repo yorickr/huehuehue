@@ -2,7 +2,7 @@
     x:Class="HueUWP.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:BindingToCommandsUWP"
+    xmlns:local="using:HueUWP"
     RequestedTheme="Light">
 
 </Application>

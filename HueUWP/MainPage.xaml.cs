@@ -81,5 +81,15 @@ namespace HueUWP
             Light l = (Light)slider.DataContext;
             l.UpdateColor((int)slider.Value, 255, 255);
         }
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
