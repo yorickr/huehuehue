@@ -17,10 +17,37 @@ namespace HueUWP
         public string Name { get; set; }
         public string Type { get; set; }
 
-        public bool IsOn { get;  set; }
-        public double Brightness{ get; set; }
-        public double Hue { get; set; }
-        public double Saturation { get; set; }
+        private bool _isOn;
+
+        public bool IsOn
+        {
+            get { return _isOn; }
+            set { _isOn = value; NotifyPropertyChanged(nameof(IsOn)); }
+        }
+
+        //Hue
+        private double _hue;
+        public double Hue
+        {
+            get { return _hue; }
+            set { _hue = value; NotifyPropertyChanged(nameof(Hue)); NotifyPropertyChanged(nameof(Color)); }
+        }
+
+        //Brightness
+        private double _brightness;
+        public double Brightness
+        {
+            get { return _brightness; }
+            set { _brightness = value; NotifyPropertyChanged(nameof(Brightness)); NotifyPropertyChanged(nameof(Color)); }
+        }
+
+        //Saturation
+        private double _saturation;
+        public double Saturation
+        {
+            get { return _saturation; }
+            set { _saturation = value; NotifyPropertyChanged(nameof(Saturation)); NotifyPropertyChanged(nameof(Color)); }
+        }
 
         public APIHandler api { get; set; }
 

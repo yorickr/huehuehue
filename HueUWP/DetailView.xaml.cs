@@ -42,14 +42,17 @@ namespace HueUWP
             //l.UpdateColor();
         }
 
-        private void Slider_DragLeave(object sender, DragEventArgs e)
+        private void Slider_Released(object sender, PointerRoutedEventArgs e)
         {
             l.UpdateColor();
         }
 
-        private void Slider_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
+        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            l.UpdateColor();
+            ToggleSwitch button = ((ToggleSwitch)sender);
+            Light light = (Light)button.DataContext;
+            if (light != null)
+                light.UpdateState(button.IsOn);
         }
     }
 }

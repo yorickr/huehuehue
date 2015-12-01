@@ -24,12 +24,12 @@
             <TextBlock RelativePanel.AlignLeftWithPanel="True" FontSize="24" Margin="20,10,0,0">Hue Lights</TextBlock>
         </RelativePanel>
 
-        <StackPanel Grid.Row="1" Margin="0,40,0,40">
+        <StackPanel Grid.Row="1" Margin="0,10,0,0">
             <ListView x:Name="myListView" ItemsSource="{Binding}" IsItemClickEnabled="True" ItemClick="myListView_ItemClick">
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="dataTemplate">
                         <StackPanel Orientation="Horizontal">
-                            <Rectangle Width="30" Height="30" Fill="{Binding Color}" Margin="10,0,0,0" />
+                            <Rectangle Width="30" Height="30" Fill="{Binding Color}" Margin="20,0,0,0" />
 
                             <StackPanel Orientation="Vertical" Width="140" Margin="10,0,0,0">
                                 <TextBlock Text="{Binding Name}" FontSize="24" />
@@ -58,7 +58,7 @@
             <AppBarSeparator/>
 
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="About" />
+                <AppBarButton Label="About" Click="AboutButton_Click"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

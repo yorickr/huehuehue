@@ -20,7 +20,7 @@ namespace HueUWP
             this.nwh = nwh;
         }
 
-        public async void Register()
+        public async Task Register()
         {
             try {
                 var json = await nwh.RegisterName("Hue", "Kenneth&Yorick");

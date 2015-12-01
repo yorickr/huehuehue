@@ -87,5 +87,11 @@ namespace HueUWP
             if (l != null)
                 rootframe.Navigate(typeof(DetailView), l);
         }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame rootframe = Window.Current.Content as Frame;
+            rootframe.Navigate(typeof(AboutView));
+        }
     }
 }

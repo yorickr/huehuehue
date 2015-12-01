@@ -20,27 +20,11 @@ namespace HueUWP
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SettingsView : Page
+    public sealed partial class AboutView : Page
     {
-        public SettingsViewModel SettingsViewModel = new SettingsViewModel();
-
-        private APIHandler api;
-
-        public SettingsView()
-        {    
+        public AboutView()
+        {
             this.InitializeComponent();
-            //SettingsViewModel = new SettingsViewModel();
-        }
-
-        private async void UpdateID_Click(object sender, RoutedEventArgs e)
-        {
-           await api.Register();
-           SettingsViewModel.Update();   
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            api = e.Parameter as APIHandler;
         }
     }
 }
