@@ -58,11 +58,11 @@ namespace HueUWP
                 var json = await nwh.AllLights();
                 JObject o = JObject.Parse(json);
 
-                for (int i = 1; i <= o.Count; i++)
+                foreach(var i in o)
                 {
-                    var light = o["" + i];
+                    var light = o["" + i.Key];
                     var state = light["state"];
-                    alllights.Add(new Light() { api = this,ID = i, Brightness = (int)state["bri"], IsOn = ((string)state["on"]).ToLower() == "true" ? true : false, Hue = (int)state["hue"], Saturation = (int)state["sat"], Name = (string)light["name"], Type = (string)light["type"] });
+                    alllights.Add(new Light() { api = this,ID = Int32.Parse( i.Key), Brightness = (int)state["bri"], IsOn = ((string)state["on"]).ToLower() == "true" ? true : false, Hue = (int)state["hue"], Saturation = (int)state["sat"], Name = (string)light["name"], Type = (string)light["type"] });
                     Debug.WriteLine("Added light number " + i + " " + state["on"]);
                 } }
             catch(Exception e)

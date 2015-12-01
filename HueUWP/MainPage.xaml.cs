@@ -42,8 +42,8 @@ namespace HueUWP
         public MainPage()
         {
             this.InitializeComponent();
-            LOCAL_SETTINGS.Values["ip"] = "localhost";
-            LOCAL_SETTINGS.Values["port"] = 8000;
+            LOCAL_SETTINGS.Values["ip"] = "145.48.205.190";
+            LOCAL_SETTINGS.Values["port"] = 80;
             NetworkHandler nwh = new NetworkHandler();
             api = new APIHandler(nwh);
             _lightsViewModel.Clear();
