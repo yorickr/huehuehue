@@ -32,7 +32,7 @@ namespace HueUWP
 
         private ObservableCollection<Light> _lightsViewModel = LightDataSource.GetLights();
 
-        private APIHandler api;
+        public APIHandler api;
 
         public ObservableCollection<Light> LightsViewModel
         {
@@ -42,8 +42,8 @@ namespace HueUWP
         public MainPage()
         {
             this.InitializeComponent();
-            LOCAL_SETTINGS.Values["ip"] = "localhost";
-            LOCAL_SETTINGS.Values["port"] = 8000;
+            //LOCAL_SETTINGS.Values["ip"] = "localhost";
+            //LOCAL_SETTINGS.Values["port"] = 8000;
             NetworkHandler nwh = new NetworkHandler();
             api = new APIHandler(nwh);
             _lightsViewModel.Clear();
@@ -75,10 +75,10 @@ namespace HueUWP
             light.UpdateColor(0, 38, 255);
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            api.Register();
-            Debug.WriteLine(LOCAL_SETTINGS.Values["id"]);
+            Frame rootframe = Window.Current.Content as Frame;
+            rootframe.Navigate(typeof(SettingsView), api);
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)

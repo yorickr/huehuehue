@@ -22,9 +22,25 @@ namespace HueUWP
     /// </summary>
     public sealed partial class SettingsView : Page
     {
+        public SettingsViewModel SettingsViewModel = new SettingsViewModel();
+
+        private APIHandler api;
+
         public SettingsView()
-        {
+        {    
             this.InitializeComponent();
+            //SettingsViewModel = new SettingsViewModel();
+        }
+
+        private void UpdateID_Click(object sender, RoutedEventArgs e)
+        {
+           api.Register();
+           SettingsViewModel.Update();   
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            api = e.Parameter as APIHandler;
         }
     }
 }

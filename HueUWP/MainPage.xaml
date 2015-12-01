@@ -23,7 +23,7 @@
         <RelativePanel Grid.Row="0">
             <TextBlock RelativePanel.AlignLeftWithPanel="True" FontSize="24" Margin="20,10,0,0">Hue Lights</TextBlock>
             <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True">
-                <Button Name="RegisterButton" Click="RegisterButton_Click" FontFamily="Segoe MDL2 Assets" FontSize="18" Margin="10" Content="&#xE71B;" />
+                <Button Name="SettingsButton" Click="SettingsButton_Click" FontFamily="Segoe MDL2 Assets" FontSize="18" Margin="10" Content="&#xE713;" />
                 <Button Name="RefreshButton" Click="RefreshButton_Click" FontFamily="Segoe MDL2 Assets" FontSize="18" Margin="10" Content="&#xE72C;" />
             </StackPanel>
         </RelativePanel>
