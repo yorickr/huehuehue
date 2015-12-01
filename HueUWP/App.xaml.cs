@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -23,6 +24,7 @@ namespace HueUWP
     /// </summary>
     sealed partial class App : Application
     {
+        public static ApplicationDataContainer LOCAL_SETTINGS = ApplicationData.Current.LocalSettings;
         Frame rootFrame;
 
         /// <summary>
@@ -79,6 +81,13 @@ namespace HueUWP
                 // parameter
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
+
+            if(LOCAL_SETTINGS.Values["ip"] == null)
+                LOCAL_SETTINGS.Values["ip"] = "localhost";
+            if (LOCAL_SETTINGS.Values["port"] == null)
+                LOCAL_SETTINGS.Values["port"] = "8000";
+
+
             // Ensure the current window is active
             Window.Current.Activate();
         }
