@@ -10,24 +10,35 @@
     mc:Ignorable="d">
 
     <Grid>
-        <StackPanel Margin="20,40,20,40">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <RelativePanel Grid.Row="0">
+            <TextBlock RelativePanel.AlignLeftWithPanel="True" FontSize="24" Margin="20,10,0,0">Hue Lights</TextBlock>
+            <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True">
+                <Button Name="RegisterButton" Click="RegisterButton_Click" FontFamily="Segoe MDL2 Assets" FontSize="18" Margin="10" Content="&#xE71B;" />
+                <Button Name="RefreshButton" Click="RefreshButton_Click" FontFamily="Segoe MDL2 Assets" FontSize="18" Margin="10" Content="&#xE72C;" />
+            </StackPanel>
+        </RelativePanel>
+        
+        <StackPanel Grid.Row="1" Margin="20,40,20,40">
             <ListView x:Name="myListView" ItemsSource="{Binding}"  >
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="dataTemplate">
                         <StackPanel Orientation="Horizontal">
                             <Rectangle Width="20" Height="20" Fill="Red" Margin="20, 0,0,0" />
 
-                            <StackPanel Orientation="Vertical" Width="110" Margin="0,0,0,20">
+                            <StackPanel Orientation="Vertical" Width="200" Margin="20,0,0,0">
                                 <TextBlock Text="{Binding Name}" FontSize="24" />
                                 <TextBlock Text="{Binding Type}" FontSize="14" />
                             </StackPanel>
 
-                            <ToggleSwitch Toggled="ToggleSwitch_Toggled" >
+                            <ToggleSwitch Margin="40,0,0,0" Toggled="ToggleSwitch_Toggled" IsOn="{Binding IsOn}">
                                 <ToggleSwitch.OffContent>Off</ToggleSwitch.OffContent>
                                 <ToggleSwitch.OnContent>On</ToggleSwitch.OnContent>
                             </ToggleSwitch>
-                            <Slider x:Name="slider" Maximum="255" Minimum="0" Width="100" ValueChanged="slider_ValueChanged" />
-                                    
 
                         </StackPanel>
                     </DataTemplate>
