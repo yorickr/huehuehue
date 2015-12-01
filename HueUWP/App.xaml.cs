@@ -83,9 +83,9 @@ namespace HueUWP
             }
 
             if(LOCAL_SETTINGS.Values["ip"] == null)
-                LOCAL_SETTINGS.Values["ip"] = "localhost";
+                LOCAL_SETTINGS.Values["ip"] = "145.48.205.190";
             if (LOCAL_SETTINGS.Values["port"] == null)
-                LOCAL_SETTINGS.Values["port"] = "8000";
+                LOCAL_SETTINGS.Values["port"] = "80";
 
 
             // Ensure the current window is active

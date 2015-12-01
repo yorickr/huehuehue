@@ -22,25 +22,21 @@
 
         <RelativePanel Grid.Row="0">
             <TextBlock RelativePanel.AlignLeftWithPanel="True" FontSize="24" Margin="20,10,0,0">Hue Lights</TextBlock>
-            <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True">
-                <Button Name="SettingsButton" Click="SettingsButton_Click" FontFamily="Segoe MDL2 Assets" FontSize="18" Margin="10" Content="&#xE713;" />
-                <Button Name="RefreshButton" Click="RefreshButton_Click" FontFamily="Segoe MDL2 Assets" FontSize="18" Margin="10" Content="&#xE72C;" />
-            </StackPanel>
         </RelativePanel>
-        
-        <StackPanel Grid.Row="1" Margin="20,40,20,40">
+
+        <StackPanel Grid.Row="1" Margin="0,40,0,40">
             <ListView x:Name="myListView" ItemsSource="{Binding}" IsItemClickEnabled="True" ItemClick="myListView_ItemClick">
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="dataTemplate">
                         <StackPanel Orientation="Horizontal">
-                            <Rectangle Width="20" Height="20" Fill="{Binding Color}" Margin="20, 0,0,0" />
+                            <Rectangle Width="30" Height="30" Fill="{Binding Color}" Margin="10,0,0,0" />
 
-                            <StackPanel Orientation="Vertical" Width="200" Margin="20,0,0,0">
+                            <StackPanel Orientation="Vertical" Width="140" Margin="10,0,0,0">
                                 <TextBlock Text="{Binding Name}" FontSize="24" />
                                 <TextBlock Text="{Binding Type}" FontSize="14" />
                             </StackPanel>
 
-                            <ToggleSwitch Margin="40,0,0,0" Toggled="ToggleSwitch_Toggled" IsOn="{Binding IsOn, Converter={StaticResource BoolConverter}}">
+                            <ToggleSwitch Margin="10,0,0,0" Toggled="ToggleSwitch_Toggled" IsOn="{Binding IsOn, Converter={StaticResource BoolConverter}}">
                                 <ToggleSwitch.OffContent>Off</ToggleSwitch.OffContent>
                                 <ToggleSwitch.OnContent>On</ToggleSwitch.OnContent>
                             </ToggleSwitch>
@@ -50,8 +46,22 @@
                 </ListView.ItemTemplate>
 
             </ListView>
-            
+
         </StackPanel>
 
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Setting" Label="Settings" Click="SettingsButton_Click"/>
+            <AppBarButton Icon="Refresh" Label="Refresh" Click="RefreshButton_Click"/>
+            <AppBarSeparator/>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="About" />
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+
 </Page>
+    
