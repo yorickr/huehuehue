@@ -19,9 +19,9 @@
             </RelativePanel>
 
             <StackPanel Grid.Row="1">
-                <Slider Maximum="65535" Value="{Binding Hue}" />
-                <Slider Maximum="254" Value="{Binding Saturation}" />
-                <Slider Maximum="254" Value="{Binding Brightness}" />
+                <Slider Maximum="65535" Value="{Binding Hue, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" PointerCaptureLost="Slider_PointerCaptureLost"/>
+                <Slider Maximum="254" Value="{Binding Saturation, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" PointerCaptureLost="Slider_PointerCaptureLost" />
+                <Slider Maximum="254" Value="{Binding Brightness, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" PointerCaptureLost="Slider_PointerCaptureLost"/>
             </StackPanel>
         </Grid>
     </Grid>
