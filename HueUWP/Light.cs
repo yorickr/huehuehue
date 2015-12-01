@@ -43,6 +43,7 @@ namespace HueUWP
             this.Hue = h; this.Saturation = s; this.Brightness = v;
             api.SetLightValues(this);
             Debug.WriteLine(r + "-" + g + "-" + b);
+            Debug.WriteLine(h + "-" + s + "-" + v);
         }
 
 
