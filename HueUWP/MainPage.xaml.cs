@@ -32,6 +32,8 @@ namespace HueUWP
 
         private ObservableCollection<Light> _lightsViewModel = LightDataSource.GetLights();
 
+        private APIHandler api;
+
         public ObservableCollection<Light> LightsViewModel
         {
             get { return this._lightsViewModel; }
@@ -43,11 +45,11 @@ namespace HueUWP
             LOCAL_SETTINGS.Values["ip"] = "localhost";
             LOCAL_SETTINGS.Values["port"] = 8000;
             NetworkHandler nwh = new NetworkHandler();
-            APIHandler api = new APIHandler(nwh);
-            //api.Register();
+            api = new APIHandler(nwh);
             api.GetAllLights(_lightsViewModel);
-            
-            Debug.WriteLine(LOCAL_SETTINGS.Values["id"]);
+
+
+
 
         }
 
@@ -73,6 +75,7 @@ namespace HueUWP
             ToggleSwitch button = ((ToggleSwitch)sender);
             Light light = (Light)button.DataContext;
             light.UpdateState(button.IsOn);
+            light.UpdateColor(0, 38, 255);
         }
 
         private void slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
@@ -84,12 +87,14 @@ namespace HueUWP
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-
+            api.Register();
+            Debug.WriteLine(LOCAL_SETTINGS.Values["id"]);
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-
+            _lightsViewModel.Clear();
+            api.GetAllLights(_lightsViewModel);
         }
     }
 }
