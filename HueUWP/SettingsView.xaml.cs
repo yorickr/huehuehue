@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -34,8 +35,10 @@ namespace HueUWP
 
         private async void UpdateID_Click(object sender, RoutedEventArgs e)
         {
-           await api.Register();
-           SettingsViewModel.Update();   
+            UserIdProgress.IsActive = true;
+            await api.Register();
+            UserIdProgress.IsActive = false;
+            SettingsViewModel.Update();   
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

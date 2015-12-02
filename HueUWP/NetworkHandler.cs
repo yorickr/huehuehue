@@ -138,15 +138,5 @@ namespace HueUWP
             return response;
         }
 
-        public async Task<String> Test()
-        {
-            var response = await Get( "111bb033202ac68b5812245c22f77eb/lights");
-            if (string.IsNullOrEmpty(response))
-                await new MessageDialog("Error while setting username. ….").ShowAsync();
-            return response;
-        }
-
-
-
     }
 }

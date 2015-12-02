@@ -61,7 +61,7 @@ namespace HueUWP
             lights.ForEach(l => SetLightValues(l));
         }
 
-        public async void GetAllLights(ObservableCollection<Light> alllights)
+        public async Task<String> GetAllLights(ObservableCollection<Light> alllights)
         {
            // List<Light> lightlist = new List<Light>();
             try {
@@ -91,6 +91,8 @@ namespace HueUWP
                 Debug.WriteLine(e.StackTrace);
                 Debug.WriteLine("Could not get all lights.");
             }
+
+            return string.Empty;
         }
 
 

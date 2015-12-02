@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -46,8 +47,21 @@ namespace HueUWP
             //LOCAL_SETTINGS.Values["port"] = 8000;
             NetworkHandler nwh = new NetworkHandler();
             api = new APIHandler(nwh);
+
+            
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            Load_Lights();
+        }
+
+        private async void Load_Lights()
+        {
             _lightsViewModel.Clear();
-            api.GetAllLights(_lightsViewModel);
+            Loading.IsActive = true;
+            await api.GetAllLights(_lightsViewModel);
+            Loading.IsActive = false;
         }
 
         public void ToggleSwitch_Tapped(object sender, TappedRoutedEventArgs e)
@@ -76,8 +90,7 @@ namespace HueUWP
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            _lightsViewModel.Clear();
-            api.GetAllLights(_lightsViewModel);
+            Load_Lights();
         }
 
         private void myListView_ItemClick(object sender, ItemClickEventArgs e)

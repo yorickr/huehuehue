@@ -30,11 +30,17 @@
             <StackPanel Margin="20">
                 <TextBlock FontSize="16">User ID</TextBlock>
                 <TextBox Margin="0,10,0,10" Text="{x:Bind SettingsViewModel.ID, Mode=OneWay}"  IsEnabled="False"/>
-                <Button Margin="0,10,0,10" Name="UpdateID" Click="UpdateID_Click">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="10" Margin="10" Text="&#xE72C;" /><TextBlock FontSize="10" Margin="10" Text="Request new" />
-                    </StackPanel>
-                </Button>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                    <Button Name="UpdateID" Click="UpdateID_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="15" Margin="5, 9, 5, 5" Text="&#xE72C;" />
+                            <TextBlock FontSize="15" Margin="5" Text="Request new" />
+                        </StackPanel>
+                    </Button>
+                    
+                    <ProgressRing Height="35" Width="35" Margin="20, 0, 0, 0" IsActive="False" Name="UserIdProgress" />
+                    
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </Grid>
