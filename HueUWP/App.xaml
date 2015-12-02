@@ -2,8 +2,8 @@
     x:Class="HueUWP.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:HueUWP"
-    RequestedTheme="Dark">
+    xmlns:local="using:HueUWP">
+    <!-- RequestedTheme="Dark" -->
 
     <Application.Resources>
         <ResourceDictionary>
