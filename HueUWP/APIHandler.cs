@@ -40,6 +40,11 @@ namespace HueUWP
             Debug.WriteLine(json);
         }
 
+        public async void SetLightState(List<Light> lights)
+        {
+            lights.ForEach(l => SetLightState(l));
+        }
+
         public async void SetLightValues(Light l)
         {
             if(l.IsOn)
@@ -49,6 +54,11 @@ namespace HueUWP
                 Debug.WriteLine(json);
             }
             
+        }
+
+        public async void SetLightValues(List<Light> lights)
+        {
+            lights.ForEach(l => SetLightValues(l));
         }
 
         public async void GetAllLights(ObservableCollection<Light> alllights)
@@ -82,5 +92,7 @@ namespace HueUWP
                 Debug.WriteLine("Could not get all lights.");
             }
         }
+
+
     }
 }
