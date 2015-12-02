@@ -36,7 +36,7 @@ namespace HueUWP
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return string.Empty;
+                    return "error";
                 }
 
                 string jsonResponse = await response.Content.ReadAsStringAsync();
@@ -48,7 +48,7 @@ namespace HueUWP
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
-                return string.Empty;
+                return "error";
             }
         }
 
@@ -68,7 +68,7 @@ namespace HueUWP
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return string.Empty;
+                    return "error";
                 }
 
                 string jsonResponse = await response.Content.ReadAsStringAsync();
@@ -80,7 +80,7 @@ namespace HueUWP
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
-                return string.Empty;
+                return "error";
             }
         }
 
@@ -99,7 +99,7 @@ namespace HueUWP
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return string.Empty;
+                    return "error";
                 }
 
                 string jsonResponse = await response.Content.ReadAsStringAsync();
@@ -111,7 +111,7 @@ namespace HueUWP
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
-                return string.Empty;
+                return "error";
             }
         }
 
@@ -126,7 +126,7 @@ namespace HueUWP
         {
             var response = await Post("",$"{{\"devicetype\":\"{AppName}#{UserName}\"}}");
             if (string.IsNullOrEmpty(response))
-                await new MessageDialog("Error while setting username. ….").ShowAsync();
+                return "error";
             return response;
         }
 
@@ -134,7 +134,7 @@ namespace HueUWP
         {
             var response = await Get($"{(String)MainPage.LOCAL_SETTINGS.Values["id"]}/lights");
             if (string.IsNullOrEmpty(response))
-                await new MessageDialog("Error while getting all lights. ….").ShowAsync();
+                return "error";
             return response;
         }
 

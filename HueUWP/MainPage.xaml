@@ -17,6 +17,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -24,10 +25,15 @@
             <TextBlock RelativePanel.AlignLeftWithPanel="True" FontSize="24" Margin="20,10,0,0">Hue Lights</TextBlock>
         </RelativePanel>
 
-        <ProgressRing Grid.Row="1" Height="60" Width="60" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin=" 0,10,0,10" IsActive="True" Name="Loading" />
+        <RelativePanel Grid.Row="1" Visibility="Visible" Name="FeedbackPanel">
+            <ProgressRing Height="60" Width="60" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin=" 0,10,0,10" IsActive="True" Name="Loading" />
+            <TextBlock RelativePanel.AlignLeftWithPanel="True" Name="ErrorMessage" Margin="20,10,0,10"/>
+        </RelativePanel>
+        
 
-        <StackPanel Grid.Row="1" Margin="0,10,0,0" Name="LightListPanel" Visibility="Collapsed">
-            <ListView x:Name="myListView" ItemsSource="{Binding}" IsItemClickEnabled="True" ItemClick="myListView_ItemClick">
+        <RelativePanel Grid.Row="2" Margin="0,10,0,0" Name="LightListPanel">
+            <ScrollViewer RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True">
+            <ListView x:Name="myListView" ItemsSource="{Binding}" IsItemClickEnabled="True" ItemClick="myListView_ItemClick" >
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="dataTemplate">
                         <StackPanel Orientation="Horizontal">
@@ -48,8 +54,8 @@
                 </ListView.ItemTemplate>
 
             </ListView>
-
-        </StackPanel>
+            </ScrollViewer>
+        </RelativePanel>
 
     </Grid>
 

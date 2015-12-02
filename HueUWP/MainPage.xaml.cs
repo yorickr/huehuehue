@@ -58,9 +58,21 @@ namespace HueUWP
 
         private async void Load_Lights()
         {
+            ErrorMessage.Text = "";
+            FeedbackPanel.Visibility = Visibility.Visible;
             _lightsViewModel.Clear();
+
             Loading.IsActive = true;
-            await api.GetAllLights(_lightsViewModel);
+            await Task.Delay(TimeSpan.FromMilliseconds(200));
+            string s = await api.GetAllLights(_lightsViewModel);
+
+            if (s == "error")
+                ErrorMessage.Text = "There was a problem connecting...";
+            else if (_lightsViewModel.Count < 1)
+                ErrorMessage.Text = "No lights found...";
+            else
+                FeedbackPanel.Visibility = Visibility.Collapsed;
+
             Loading.IsActive = false;
         }
 

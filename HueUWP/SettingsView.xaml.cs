@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,10 +36,16 @@ namespace HueUWP
 
         private async void UpdateID_Click(object sender, RoutedEventArgs e)
         {
+            IDBox.Background = default(Brush);
+
             UserIdProgress.IsActive = true;
-            await api.Register();
+            string s = await api.Register();
+            if (s == "error")
+                IDBox.Background = new SolidColorBrush(Colors.Red);
+            else
+                SettingsViewModel.Update();
             UserIdProgress.IsActive = false;
-            SettingsViewModel.Update();   
+              
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
