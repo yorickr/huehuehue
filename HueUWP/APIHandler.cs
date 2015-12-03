@@ -114,8 +114,8 @@ namespace HueUWP
                     }
                     else
                     {
-                        alllights.Add(new Light() { api = this, ID = Int32.Parse(i.Key), Brightness = (int)state["bri"], SaturationEnabled = false, HueEnabled = false, IsOn = ((string)state["on"]).ToLower() == "true" ? true : false, Hue = -1, Saturation = 254, Name = (string)light["name"], Type = (string)light["type"] });
-                    }
+                        alllights.Add(new Light() { api = this, ID = Int32.Parse(i.Key), Brightness = (int)state["bri"], SaturationEnabled = false,HueEnabled = false,IsOn = ((string)state["on"]).ToLower() == "true" ? true : false, Hue =0, Saturation = 0, Name = (string)light["name"], Type = (string)light["type"] });
+                    }//Debug.WriteLine("Added light number " + i + " " + state["on"]);
                 }
                 return "success";
             }
