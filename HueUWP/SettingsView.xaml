@@ -19,15 +19,15 @@
         </RelativePanel>
 
         <StackPanel Grid.Row="1">
-            <StackPanel Margin="20">
+            <StackPanel Margin="20, 10, 20, 0">
                 <TextBlock FontSize="16">Server IP</TextBlock>
-                <TextBox Margin="0,10,0,10" Text="{x:Bind SettingsViewModel.IP, Mode=TwoWay}" />
+                <TextBox Margin="0,10,0,10" Text="{x:Bind SettingsViewModel.IP, Mode=TwoWay}" PlaceholderText="145.48.205.190"/>
             </StackPanel>
-            <StackPanel Margin="20">
+            <StackPanel Margin="20, 10, 20, 0">
                 <TextBlock FontSize="16">Server Port</TextBlock>
-                <TextBox Margin="0,10,0,10" Text="{x:Bind SettingsViewModel.PORT, Mode=TwoWay}" />
+                <TextBox Margin="0,10,0,10" Text="{x:Bind SettingsViewModel.PORT, Mode=TwoWay}" PlaceholderText="80" />
             </StackPanel>
-            <StackPanel Margin="20">
+            <StackPanel Margin="20, 10, 20, 0">
                 <TextBlock FontSize="16">User ID</TextBlock>
                 <TextBox Name="IDBox" Margin="0,10,0,10" Text="{x:Bind SettingsViewModel.ID, Mode=OneWay}"  IsEnabled="False"/>
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
