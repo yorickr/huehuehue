@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="ColorUtil.cs" />
     <Compile Include="Converters\NullableBooleanConverter.cs" />
+    <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="DetailView.xaml.cs">
       <DependentUpon>DetailView.xaml</DependentUpon>
     </Compile>

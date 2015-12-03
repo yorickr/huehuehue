@@ -11,6 +11,7 @@
 
     <Page.Resources>
         <convert:NullableBooleanConverter x:Key="BoolConverter"/>
+        <convert:VisibilityConverter x:Key="VisibilityConverter"/>
     </Page.Resources>
 
         <Grid>
@@ -40,12 +41,12 @@
             </StackPanel>
 
             <StackPanel Grid.Row="4">
-                <StackPanel Margin="20,10,20,0">
+                <StackPanel Margin="20,10,20,0" Visibility="{Binding HueEnabled, Converter={StaticResource VisibilityConverter}}">
                     <TextBlock FontSize="18">Hue</TextBlock>
                     <Slider Maximum="65535" Value="{Binding Hue, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" PointerCaptureLost="Slider_Released"/>
                 </StackPanel>
 
-                <StackPanel Margin="20,10,20,0">
+                <StackPanel Margin="20,10,20,0" Visibility="{Binding SaturationEnabled, Converter={StaticResource VisibilityConverter}}">
                     <TextBlock FontSize="18">Saturation</TextBlock>
                     <Slider Maximum="254" Value="{Binding Saturation, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" PointerCaptureLost="Slider_Released" />
                 </StackPanel>

@@ -73,25 +73,20 @@ namespace HueUWP
             try {
                 var json = await nwh.AllLights();
                 JObject o = JObject.Parse(json);
+                Debug.WriteLine(o.ToString()); 
                 foreach(var i in o)
                 {
                     var light = o["" + i.Key];
                     var state = light["state"];
-                    alllights.Add(new Light() { api = this,ID = Int32.Parse( i.Key), Brightness = (int)state["bri"], IsOn = ((string)state["on"]).ToLower() == "true" ? true : false, Hue = (int)state["hue"], Saturation = (int)state["sat"], Name = (string)light["name"], Type = (string)light["type"] });
-                    //Debug.WriteLine("Added light number " + i + " " + state["on"]);
+                    if ((String)light["type"] != "Dimmable light")
+                    {
+                        alllights.Add(new Light() { api = this, ID = Int32.Parse(i.Key), Brightness = (int)state["bri"], SaturationEnabled = true, HueEnabled = true, IsOn = ((string)state["on"]).ToLower() == "true" ? true : false, Hue = (int)state["hue"], Saturation = (int)state["sat"], Name = (string)light["name"], Type = (string)light["type"] });
+                    }
+                    else
+                    {
+                        alllights.Add(new Light() { api = this, ID = Int32.Parse(i.Key), Brightness = (int)state["bri"], SaturationEnabled = false,HueEnabled = false,IsOn = ((string)state["on"]).ToLower() == "true" ? true : false, Hue =0, Saturation = 0, Name = (string)light["name"], Type = (string)light["type"] });
+                    }//Debug.WriteLine("Added light number " + i + " " + state["on"]);
                 }
-
-                //lightlist = lightlist.OrderBy(q => q.Name).ToList();
-
-                //lightlist.Sort(
-                //    delegate (Light p1, Light p2)
-                //   {
-                //       return p1.Name.CompareTo(p2.Name);
-                //   }
-                // );
-
-                //lightlist.ForEach(q => alllights.Add(q));
-
                 return "success";
             }
             catch(Exception e)
