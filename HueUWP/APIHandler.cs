@@ -13,7 +13,7 @@ namespace HueUWP
 {
     public class APIHandler
     {
-        
+        bool discomode = false;
 
         NetworkHandler nwh;
         public APIHandler(NetworkHandler nwh)
@@ -52,8 +52,9 @@ namespace HueUWP
 
         public async void DiscoMode(ObservableCollection<Light> lights)
         {
+            discomode = true;
             Random rnd = new Random();
-            for(int i = 0; i < 100; i++)
+            while(discomode)
             {
                 lights.ToList().ForEach(l =>
                 {
@@ -65,6 +66,11 @@ namespace HueUWP
                 await Task.Delay(TimeSpan.FromMilliseconds(100));
             }
             
+        }
+
+        public async void DiscoMode(bool on)
+        {
+            discomode = on;
         }
 
         public async Task<String> SetLightValues(Light l)

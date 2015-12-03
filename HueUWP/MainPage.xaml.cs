@@ -119,9 +119,12 @@ namespace HueUWP
             rootframe.Navigate(typeof(AboutView));
         }
 
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        private void DiscoButton_Click(object sender, RoutedEventArgs e)
         {
-            api.DiscoMode(_lightsViewModel);
+            if ((bool)DiscoButton.IsChecked)
+                api.DiscoMode(_lightsViewModel);
+            else
+                api.DiscoMode(false);
         }
     }
 }
