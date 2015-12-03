@@ -46,12 +46,12 @@
                 </StackPanel>
 
                 <StackPanel Margin="20,10,20,0">
-                    <TextBlock FontSize="14">Saturation</TextBlock>
+                    <TextBlock FontSize="18">Saturation</TextBlock>
                     <Slider Maximum="254" Value="{Binding Saturation, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" PointerCaptureLost="Slider_Released" />
                 </StackPanel>
 
                 <StackPanel Margin="20,10,20,0">
-                    <TextBlock FontSize="14">Brightness</TextBlock>
+                    <TextBlock FontSize="18">Brightness</TextBlock>
                     <Slider Maximum="254" Value="{Binding Brightness, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" PointerCaptureLost="Slider_Released"/>
                 </StackPanel>
 
