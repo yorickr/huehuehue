@@ -17,6 +17,9 @@ namespace HueUWP
         public string Name { get; set; }
         public string Type { get; set; }
 
+        public bool HueEnabled;
+        public bool SaturationEnabled;
+
         private bool _isOn;
 
         public bool IsOn
