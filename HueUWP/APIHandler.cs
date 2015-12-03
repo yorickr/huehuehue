@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using Windows.Storage;
 
 namespace HueUWP
@@ -49,6 +50,23 @@ namespace HueUWP
             lights.ForEach(l => SetLightState(l));
         }
 
+        public async void DiscoMode(ObservableCollection<Light> lights)
+        {
+            Random rnd = new Random();
+            for(int i = 0; i < 100; i++)
+            {
+                lights.ToList().ForEach(l =>
+                {
+                    l.Hue = rnd.Next(0, 65535);
+                    l.Brightness = rnd.Next(128, 254);
+                    l.UpdateColorDisco();
+                });
+                //"transitiontime": 0
+                await Task.Delay(TimeSpan.FromMilliseconds(100));
+            }
+            
+        }
+
         public async Task<String> SetLightValues(Light l)
         {
             if(l.IsOn)
@@ -59,6 +77,18 @@ namespace HueUWP
                 return "success";
             }
             
+            return "error";
+        }
+        public async Task<String> SetInstantLightValues(Light l)
+        {
+            if (l.IsOn)
+            {
+                Debug.WriteLine(l.Hue);
+                var json = await nwh.SetLightInfo(l.ID, $"{{\"bri\": {l.Brightness},\"hue\": {(l.Hue)},\"sat\": {l.Saturation}, \"transitiontime\" : 0}}");
+                Debug.WriteLine(json);
+                return "success";
+            }
+
             return "error";
         }
 
@@ -84,8 +114,8 @@ namespace HueUWP
                     }
                     else
                     {
-                        alllights.Add(new Light() { api = this, ID = Int32.Parse(i.Key), Brightness = (int)state["bri"], SaturationEnabled = false,HueEnabled = false,IsOn = ((string)state["on"]).ToLower() == "true" ? true : false, Hue =-1, Saturation = 254, Name = (string)light["name"], Type = (string)light["type"] });
-                    }//Debug.WriteLine("Added light number " + i + " " + state["on"]);
+                        alllights.Add(new Light() { api = this, ID = Int32.Parse(i.Key), Brightness = (int)state["bri"], SaturationEnabled = false, HueEnabled = false, IsOn = ((string)state["on"]).ToLower() == "true" ? true : false, Hue = -1, Saturation = 254, Name = (string)light["name"], Type = (string)light["type"] });
+                    }
                 }
                 return "success";
             }

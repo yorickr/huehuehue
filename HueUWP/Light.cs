@@ -76,6 +76,11 @@ namespace HueUWP
             api.SetLightValues(this);
         }
 
+        public void UpdateColorDisco()
+        {
+            api.SetInstantLightValues(this);
+        }
+
         public void UpdateColor(int h, int s, int b)
         {
             //double h; double s; double v;

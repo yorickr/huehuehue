@@ -118,5 +118,10 @@ namespace HueUWP
             Frame rootframe = Window.Current.Content as Frame;
             rootframe.Navigate(typeof(AboutView));
         }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            api.DiscoMode(_lightsViewModel);
+        }
     }
 }

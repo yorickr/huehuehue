@@ -61,6 +61,7 @@
 
     <Page.BottomAppBar>
         <CommandBar>
+            <AppBarButton Icon="Audio" Label="Disco" Click="AppBarButton_Click"/>
             <AppBarButton Icon="Setting" Label="Settings" Click="SettingsButton_Click"/>
             <AppBarButton Icon="Refresh" Label="Refresh" Click="RefreshButton_Click"/>
             <AppBarSeparator/>
