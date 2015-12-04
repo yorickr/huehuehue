@@ -64,7 +64,7 @@ namespace HueUWP
                     l.UpdateColorDisco();
                 });
                 //"transitiontime": 0
-                await Task.Delay(TimeSpan.FromMilliseconds(100));
+                await Task.Delay(TimeSpan.FromMilliseconds(400));
             }
             
         }

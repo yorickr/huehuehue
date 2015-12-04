@@ -62,12 +62,14 @@
     <Page.BottomAppBar>
         <CommandBar>
             <AppBarButton Icon="Edit" Label="Change values" Name="ValuesButton" Click="ValuesButton_Click" Visibility="Collapsed"/>
-            <AppBarButton Icon="Like" Label="On/Off" Name="OnOffButton" Click="OnOffButton_Click" Visibility="Collapsed"/>
+            <AppBarButton Icon="LikeDislike" Label="On/Off" Name="OnOffButton" Click="OnOffButton_Click" Visibility="Collapsed"/>
+            
+            <AppBarToggleButton Icon="SelectAll" Label="Group" Name="GroupButton" Click="GroupButton_Click"/>
+            <AppBarSeparator Name="Seperator" />
             <AppBarToggleButton Icon="Audio" Label="Disco" Name="DiscoButton" Click="DiscoButton_Click"/>
-            <AppBarToggleButton Icon="Save" Label="Group" Name="GroupButton" Click="GroupButton_Click"/>
-            <AppBarButton Icon="Setting" Label="Settings" Click="SettingsButton_Click"/>
-            <AppBarButton Icon="Refresh" Label="Refresh" Click="RefreshButton_Click"/>
-            <AppBarSeparator/>
+            <AppBarButton Icon="Setting" Label="Settings" Name="SettingsButton" Click="SettingsButton_Click"/>
+            <AppBarButton Icon="Refresh" Label="Refresh" Name="RefreshButton" Click="RefreshButton_Click"/>
+            
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="About" Click="AboutButton_Click"/>

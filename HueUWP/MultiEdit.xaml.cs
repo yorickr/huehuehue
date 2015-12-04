@@ -26,9 +26,6 @@ namespace HueUWP
     {
         IList<Light> lights = new List<Light>();
         MainPage main;
-        int hue = 65535;
-        int sat = 254;
-        int bri = 254;
 
         public MultiEdit()
         {
@@ -38,12 +35,14 @@ namespace HueUWP
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             main = e.Parameter as MainPage;
+
             foreach(var v in main.GetListView().SelectedItems)
             {
                 Light l = (Light)v;
                 lights.Add(l);
             }
-            this.DataContext = this;
+
+            LightsSelectedField.Text = lights.ToDelimitedString(l => l.Name);
         }
 
 

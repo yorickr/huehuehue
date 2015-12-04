@@ -138,6 +138,11 @@ namespace HueUWP
                 myListView.SelectionMode = ListViewSelectionMode.Multiple;
                 OnOffButton.Visibility = Visibility.Visible;
                 ValuesButton.Visibility = Visibility.Visible;
+
+                Seperator.Visibility = Visibility.Collapsed;
+                DiscoButton.Visibility = Visibility.Collapsed;
+                RefreshButton.Visibility = Visibility.Collapsed;
+                SettingsButton.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -145,6 +150,11 @@ namespace HueUWP
                 myListView.SelectionMode = ListViewSelectionMode.Single;
                 OnOffButton.Visibility = Visibility.Collapsed;
                 ValuesButton.Visibility = Visibility.Collapsed;
+
+                Seperator.Visibility = Visibility.Visible;
+                DiscoButton.Visibility = Visibility.Visible;
+                RefreshButton.Visibility = Visibility.Visible;
+                SettingsButton.Visibility = Visibility.Visible;
             }
 
         }
