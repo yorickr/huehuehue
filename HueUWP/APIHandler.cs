@@ -60,6 +60,7 @@ namespace HueUWP
                 {
                     l.Hue = rnd.Next(0, 65535);
                     l.Brightness = rnd.Next(128, 254);
+                    l.Saturation = 254;
                     l.UpdateColorDisco();
                 });
                 //"transitiontime": 0
@@ -109,7 +110,6 @@ namespace HueUWP
             try {
                 var json = await nwh.AllLights();
                 JObject o = JObject.Parse(json);
-                Debug.WriteLine(o.ToString()); 
                 foreach(var i in o)
                 {
                     var light = o["" + i.Key];

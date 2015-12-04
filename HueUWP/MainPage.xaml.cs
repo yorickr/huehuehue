@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -125,6 +127,53 @@ namespace HueUWP
                 api.DiscoMode(_lightsViewModel);
             else
                 api.DiscoMode(false);
+        }
+
+        private void GroupButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            if ((bool)GroupButton.IsChecked)
+            {
+                myListView.IsItemClickEnabled = false;
+                myListView.SelectionMode = ListViewSelectionMode.Multiple;
+                OnOffButton.Visibility = Visibility.Visible;
+                ValuesButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                myListView.IsItemClickEnabled = true;
+                myListView.SelectionMode = ListViewSelectionMode.Single;
+                OnOffButton.Visibility = Visibility.Collapsed;
+                ValuesButton.Visibility = Visibility.Collapsed;
+            }
+
+        }
+
+        private void OnOffButton_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)GroupButton.IsChecked)
+            {
+                foreach(var v in myListView.SelectedItems)
+                {
+                    ((Light)v).UpdateState(!((Light)v).IsOn);
+                }
+            }
+        }
+
+        public ListView GetListView()
+        {
+            return myListView;
+        }
+
+        //hue.imegumii.space
+        private void ValuesButton_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)GroupButton.IsChecked)
+            {
+                Frame rootframe = Window.Current.Content as Frame;
+                if (myListView.SelectedItems != null)
+                    rootframe.Navigate(typeof(MultiEdit), this);
+            }
         }
     }
 }
