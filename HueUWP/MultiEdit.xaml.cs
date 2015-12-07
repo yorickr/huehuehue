@@ -36,7 +36,12 @@ namespace HueUWP
         {
             main = e.Parameter as MainPage;
 
-            foreach(var v in main.GetListView().SelectedItems)
+            HueSlider.Value = ((Light) main.GetListView().SelectedItems[0]).Hue;
+            SaturationSlider.Value = ((Light)main.GetListView().SelectedItems[0]).Saturation;
+            BrightnessSlider.Value = ((Light)main.GetListView().SelectedItems[0]).Brightness;
+            OnOffButton.IsOn = ((Light)main.GetListView().SelectedItems[0]).IsOn;
+
+            foreach (var v in main.GetListView().SelectedItems)
             {
                 Light l = (Light)v;
                 lights.Add(l);

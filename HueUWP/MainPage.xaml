@@ -61,14 +61,46 @@
 
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Icon="Edit" Label="Change values" Name="ValuesButton" Click="ValuesButton_Click" Visibility="Collapsed"/>
-            <AppBarButton Icon="LikeDislike" Label="On/Off" Name="OnOffButton" Click="OnOffButton_Click" Visibility="Collapsed"/>
+            <!-- Update values -->
+            <AppBarButton Label="Change values" Name="ValuesButton" Click="ValuesButton_Click" Visibility="Collapsed">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <!-- Update on/off -->
+            <AppBarButton Label="On" Name="OnOffButton" Click="OnOffButton_Click" Visibility="Collapsed">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8B1;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <!-- Group -->
+            <AppBarToggleButton Label="Group" Name="GroupButton" Click="GroupButton_Click">
+                <AppBarToggleButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE73A;"/>
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
             
-            <AppBarToggleButton Icon="SelectAll" Label="Group" Name="GroupButton" Click="GroupButton_Click"/>
             <AppBarSeparator Name="Seperator" />
-            <AppBarToggleButton Icon="Audio" Label="Disco" Name="DiscoButton" Click="DiscoButton_Click"/>
-            <AppBarButton Icon="Setting" Label="Settings" Name="SettingsButton" Click="SettingsButton_Click"/>
-            <AppBarButton Icon="Refresh" Label="Refresh" Name="RefreshButton" Click="RefreshButton_Click"/>
+
+            <!-- Disco -->
+            <AppBarToggleButton Label="Disco" Name="DiscoButton" Click="DiscoButton_Click">
+                <AppBarToggleButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D6;"/>
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+            
+            <!-- Settings -->
+            <AppBarButton Label="Settings" Name="SettingsButton" Click="SettingsButton_Click">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE713;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <!-- Refresh -->
+            <AppBarButton Label="Refresh" Name="RefreshButton" Click="RefreshButton_Click">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72C;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
             
 
             <CommandBar.SecondaryCommands>

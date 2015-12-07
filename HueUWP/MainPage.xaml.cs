@@ -161,11 +161,24 @@ namespace HueUWP
 
         private void OnOffButton_Click(object sender, RoutedEventArgs e)
         {
+            bool first = false;
+
+            if(OnOffButton.Label == "Off")
+            {
+                first = false;
+                OnOffButton.Label = "On";
+            }
+            else
+            {
+                first = true;
+                OnOffButton.Label = "Off";
+            }
+
             if ((bool)GroupButton.IsChecked)
             {
                 foreach(var v in myListView.SelectedItems)
                 {
-                    ((Light)v).UpdateState(!((Light)v).IsOn);
+                    ((Light)v).UpdateState(first);
                 }
             }
         }

@@ -34,7 +34,7 @@
         </RelativePanel>
 
         <StackPanel Grid.Row="3">
-            <ToggleSwitch Margin="20,10,0,10" Toggled="ToggleSwitch_Toggled" IsOn="False">
+            <ToggleSwitch Margin="20,10,0,10" Name="OnOffButton" Toggled="ToggleSwitch_Toggled" IsOn="False">
                 <ToggleSwitch.OffContent>Off</ToggleSwitch.OffContent>
                 <ToggleSwitch.OnContent>On</ToggleSwitch.OnContent>
             </ToggleSwitch>
