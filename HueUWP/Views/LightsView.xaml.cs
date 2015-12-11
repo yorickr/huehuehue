@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -37,6 +38,10 @@ namespace HueUWP.Views
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Enabled;
 
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+            Application.Current.Suspending += Current_Suspending;
+            Application.Current.Resuming += Current_Resuming;
+
             _lightsViewModel = new LightListDataSource();
 
             timer = new DispatcherTimer();
@@ -44,14 +49,51 @@ namespace HueUWP.Views
             timer.Tick += Timer_Tick;
         }
 
+        private void Current_Resuming(object sender, object e)
+        {
+            if ((bool)DiscoButton.IsChecked)
+                App.api.DiscoMode(_lightsViewModel.GetLights());
+        }
+
+        private void Current_Suspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
+        {
+            App.api.DiscoMode(false);
+        }
+
+        private void OnBackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if((bool)GroupButton.IsChecked)
+            {
+                GroupButton.IsChecked = false;
+                GroupButton_Click(this, new RoutedEventArgs());
+                e.Handled = true;
+            }
+        }
+
         private void Timer_Tick(object sender, object e)
         {
             QuietReloadLights();
         }
 
+        private void StartTimer()
+        {
+            if ((bool)App.LOCAL_SETTINGS.Values["autorefresh"])
+            {
+                QuietReloadLights();
+                timer.Start();
+            }
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ReloadLights();
+            if (e.NavigationMode == NavigationMode.New)
+                ReloadLights();
+            else
+            {
+                LightsList.SelectedItems.Clear();
+                StartTimer();
+            }
+        
             this.DataContext = LightsViewModel;
         }
 
@@ -82,7 +124,7 @@ namespace HueUWP.Views
             else
             {
                 FeedbackPanel.Visibility = Visibility.Collapsed;
-                timer.Start();
+                StartTimer();
             }
 
             Loading.IsActive = false;

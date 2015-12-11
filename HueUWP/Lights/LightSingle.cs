@@ -24,7 +24,7 @@ namespace HueUWP.Lights
 
         public override void SetColor(bool instant = false)
         {
-            App.api.SetLightColor(this);
+            App.api.SetLightColor(this, instant);
         }
 
         public override async Task<String> Update()

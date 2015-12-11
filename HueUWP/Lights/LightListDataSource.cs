@@ -37,6 +37,7 @@ namespace HueUWP.Lights
             foreach(Light l in _lights)
             {
                 await l.Update();
+                await Task.Delay(TimeSpan.FromMilliseconds(100));
             }
 
             return "success";
