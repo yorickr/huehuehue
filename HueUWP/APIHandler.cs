@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using Windows.Storage;
 using HueUWP.Lights;
+using Windows.Networking.Connectivity;
+using Windows.Networking;
 
 namespace HueUWP
 {
@@ -23,9 +25,12 @@ namespace HueUWP
 
         public async Task<String> Register()
         {
+            var hostNames = NetworkInformation.GetHostNames();
+            var hostName = hostNames.FirstOrDefault(name => name.Type == HostNameType.DomainName)?.DisplayName ?? "Unknown Device";
+
             try
             {
-                var json = await NetworkHandler.RegisterName("YK Hue", "YK");
+                var json = await NetworkHandler.RegisterName("YK Hue", hostName);
                 json = json.Replace("[", "").Replace("]", "");
                 JObject o = JObject.Parse(json);
                 string id = o["success"]["username"].ToString();
@@ -46,9 +51,12 @@ namespace HueUWP
             var state = o["action"];
 
             g.IsOn = ((string)state["on"]).ToLower() == "true" ? true : false;
-            g.Hue = (int)state["hue"];
-            g.Brightness = (int)state["bri"];
-            g.Saturation = (int)state["sat"];
+            if(g.HueEnabled)
+                g.Hue = (int)state["hue"];
+            if(g.BrightnessEnabled)
+                g.Brightness = (int)state["bri"];
+            if(g.SaturationEnabled)
+                g.Saturation = (int)state["sat"];
 
             return "success";
 
@@ -58,12 +66,18 @@ namespace HueUWP
         {
             string json = await NetworkHandler.Light(l.ID);
             JObject o = JObject.Parse(json);
+
+            Debug.WriteLine(o);
+
             var state = o["state"];
 
             l.IsOn = ((string)state["on"]).ToLower() == "true" ? true : false;
-            l.Hue = (int)state["hue"];
-            l.Brightness = (int)state["bri"];
-            l.Saturation = (int)state["sat"];
+            if(l.HueEnabled)
+                l.Hue = (int)state["hue"];
+            if(l.BrightnessEnabled)
+                l.Brightness = (int)state["bri"];
+            if(l.SaturationEnabled)
+                l.Saturation = (int)state["sat"];
 
             return "success";
         }
@@ -225,6 +239,7 @@ namespace HueUWP
                 return "error";
             }
         }
+
 
         public async void DiscoMode(ObservableCollection<Light> lights)
         {
