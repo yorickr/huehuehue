@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace HueUWP
+namespace HueUWP.Views
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -25,8 +25,6 @@ namespace HueUWP
     public sealed partial class SettingsView : Page
     {
         public SettingsViewModel SettingsViewModel = new SettingsViewModel();
-
-        private APIHandler api;
 
         public SettingsView()
         {    
@@ -39,18 +37,13 @@ namespace HueUWP
             IDBox.Background = default(Brush);
 
             UserIdProgress.IsActive = true;
-            string s = await api.Register();
+            string s = await App.api.Register();
             if (s == "error")
                 IDBox.Background = new SolidColorBrush(Colors.Red);
             else
                 SettingsViewModel.Update();
             UserIdProgress.IsActive = false;
               
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            api = e.Parameter as APIHandler;
         }
     }
 }

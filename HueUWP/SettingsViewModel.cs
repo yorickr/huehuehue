@@ -11,8 +11,6 @@ namespace HueUWP
 {
     public class SettingsViewModel : INotifyPropertyChanged
     {
-        private static ApplicationDataContainer LOCAL_SETTINGS = ApplicationData.Current.LocalSettings;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged(string propertyName)
@@ -22,19 +20,19 @@ namespace HueUWP
 
         public string IP
         {
-            get { Debug.WriteLine(LOCAL_SETTINGS.Values["ip"]); return LOCAL_SETTINGS.Values["ip"] as string; }
-            set { LOCAL_SETTINGS.Values["ip"] = value; NotifyPropertyChanged(nameof(IP));  }
+            get { Debug.WriteLine(App.LOCAL_SETTINGS.Values["ip"]); return App.LOCAL_SETTINGS.Values["ip"] as string; }
+            set { App.LOCAL_SETTINGS.Values["ip"] = value; NotifyPropertyChanged(nameof(IP));  }
         }
 
         public string PORT
         {
-            get { Debug.WriteLine(LOCAL_SETTINGS.Values["port"]); return Convert.ToInt32(LOCAL_SETTINGS.Values["port"]).ToString(); }
-            set { LOCAL_SETTINGS.Values["port"] = int.Parse(value); NotifyPropertyChanged(nameof(PORT)); }
+            get { Debug.WriteLine(App.LOCAL_SETTINGS.Values["port"]); return Convert.ToInt32(App.LOCAL_SETTINGS.Values["port"]).ToString(); }
+            set { App.LOCAL_SETTINGS.Values["port"] = int.Parse(value); NotifyPropertyChanged(nameof(PORT)); }
         }
 
         public string ID
         {
-            get { Debug.WriteLine(LOCAL_SETTINGS.Values["id"]); return LOCAL_SETTINGS.Values["id"] as string; }
+            get { Debug.WriteLine(App.LOCAL_SETTINGS.Values["id"]); return App.LOCAL_SETTINGS.Values["id"] as string; }
         }
 
         public void Update()

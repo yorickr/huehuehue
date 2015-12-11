@@ -1,6 +1,4 @@
 ﻿Todo
- - Binding in multiple edit mode. Doen door meerdere soorten models mee te geven bij het navigeren naar de detail pagina.
  - About pagina mooier maken.
  - Group view pagina -> Mainpage moet dan eigenlijk een lamp list ding worden, en die kan je dan ook aanroepen met een group.
- - Disco mode beter maken.
- - Automatisch refreshing.
+ 

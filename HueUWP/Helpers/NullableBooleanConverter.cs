@@ -3,31 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace HueUWP.Converters
+namespace HueUWP.Helpers
 {
-    class VisibilityConverter : IValueConverter
+    public class NullableBooleanConverter : IValueConverter
     {
+        //From bool to nullable
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             bool b = (bool)value;
-
-            if (b)
-                return Visibility.Visible;
-            else
-                return Visibility.Collapsed;
+            bool? be = b as bool?;
+            return be;
         }
 
+        //From nullable to bool
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            Visibility v = (Visibility)value;
+            bool? b = (bool?)value;
+            bool be = false;
+            if (b.HasValue)
+                be = (bool)b;
 
-            if (v == Visibility.Visible)
-                return true;
-            else
-                return false;
+            return be;
         }
     }
 }

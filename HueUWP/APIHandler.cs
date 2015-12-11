@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using HueUWP.Helpers;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Windows.Storage;
+using HueUWP.Lights;
 
 namespace HueUWP
 {
@@ -15,21 +17,19 @@ namespace HueUWP
     {
         bool discomode = false;
 
-        NetworkHandler nwh;
-        public APIHandler(NetworkHandler nwh)
+        public APIHandler()
         {
-            this.nwh = nwh;
         }
 
         public async Task<String> Register()
         {
             try
             {
-                var json = await nwh.RegisterName("YK Hue", "YK");
+                var json = await NetworkHandler.RegisterName("YK Hue", "YK");
                 json = json.Replace("[", "").Replace("]", "");
                 JObject o = JObject.Parse(json);
                 string id = o["success"]["username"].ToString();
-                MainPage.LOCAL_SETTINGS.Values["id"] = id;
+                App.LOCAL_SETTINGS.Values["id"] = id;
                 return "success";
             }
             catch (Exception e)
@@ -39,90 +39,183 @@ namespace HueUWP
             }
         }
 
-        public async void SetLightState(Light l)
+        public async Task<String> UpdateGroup(Light g)
         {
-            var json = await nwh.SetLightInfo(l.ID, $"{{\"on\": {((l.IsOn) ? "true" : "false")}}}");
-            Debug.WriteLine(json);
+            string json = await NetworkHandler.Group(g.ID);
+            JObject o = JObject.Parse(json);
+            var state = o["action"];
+
+            g.IsOn = ((string)state["on"]).ToLower() == "true" ? true : false;
+            g.Hue = (int)state["hue"];
+            g.Brightness = (int)state["bri"];
+            g.Saturation = (int)state["sat"];
+
+            return "success";
+
         }
 
-        public async void SetLightState(List<Light> lights)
+        public async Task<String> UpdateLight(Light l)
         {
-            lights.ForEach(l => SetLightState(l));
+            string json = await NetworkHandler.Light(l.ID);
+            JObject o = JObject.Parse(json);
+            var state = o["state"];
+
+            l.IsOn = ((string)state["on"]).ToLower() == "true" ? true : false;
+            l.Hue = (int)state["hue"];
+            l.Brightness = (int)state["bri"];
+            l.Saturation = (int)state["sat"];
+
+            return "success";
         }
 
-        public async void DiscoMode(ObservableCollection<Light> lights)
+        public async Task<String> SetLightState(Light l)
         {
-            discomode = true;
-            Random rnd = new Random();
-            while(discomode)
+            string json = "error";
+            if (l is LightSingle)
+                json = await NetworkHandler.SetLight(l.ID, l.IsOn);
+            return json;
+        }
+
+
+        public async Task<String> SetLightColor(Light l, bool instant = false)
+        {
+            if(l is LightSingle && l.IsOn)
             {
-                lights.ToList().ForEach(l =>
+                var json = await NetworkHandler.SetLight(l.ID, l.Hue, l.Saturation, l.Brightness, instant);
+                return "success";
+            }  
+            return "error";
+        }
+
+        public async Task<String> SetGroupState(Light l)
+        {
+            string json = "error";
+            if (l is LightGroup)
+                json = await NetworkHandler.SetGroup(l.ID, l.IsOn);
+            return json;
+        }
+
+
+        public async Task<String> SetGroupColor(Light l, bool instant = false)
+        {
+            if (l is LightGroup && l.IsOn)
+            {
+                var json = await NetworkHandler.SetGroup(l.ID, l.Hue, l.Saturation, l.Brightness, instant);
+                return "success";
+            }
+
+            return "error";
+        }
+
+        public async Task<String> Groups(ObservableCollection<Light> groups)
+        {
+            try
+            {
+                var json = await NetworkHandler.Groups();
+                JObject o = JObject.Parse(json);
+                foreach (var i in o)
                 {
-                    l.Hue = rnd.Next(0, 65535);
-                    l.Brightness = rnd.Next(128, 254);
-                    l.Saturation = 254;
-                    l.UpdateColorDisco();
-                });
-                //"transitiontime": 0
-                await Task.Delay(TimeSpan.FromMilliseconds(400));
-            }
-            
-        }
+                    var groupjson = await NetworkHandler.Group(Int32.Parse(i.Key));
+                    JObject o2 = JObject.Parse(groupjson);
+                    var state = o2["action"];
 
-        public async void DiscoMode(bool on)
-        {
-            discomode = on;
-        }
+                    Light g = new LightGroup(Int32.Parse(i.Key), (string)o2["name"]);
 
-        public async Task<String> SetLightValues(Light l)
-        {
-            if(l.IsOn)
-            {
-                Debug.WriteLine(l.Hue);
-                var json = await nwh.SetLightInfo(l.ID, $"{{\"bri\": {l.Brightness},\"hue\": {(l.Hue)},\"sat\": {l.Saturation}}}");
-                Debug.WriteLine(json);
+                    g.IsOn = ((string)state["on"]).ToLower() == "true" ? true : false;
+
+                    //Hue
+                    if (!state["hue"].IsNullOrEmpty())
+                    {
+                        g.HueEnabled = true;
+                        g.Hue = (int)state["hue"];
+                    }
+                    else
+                        g.HueEnabled = false;
+
+                    //Brightness
+                    if (!state["bri"].IsNullOrEmpty())
+                    {
+                        g.BrightnessEnabled = true;
+                        g.Brightness = (int)state["bri"];
+                    }
+                    else
+                        g.BrightnessEnabled = false;
+
+                    //Saturation
+                    if (!state["sat"].IsNullOrEmpty())
+                    {
+                        g.SaturationEnabled = true;
+                        g.Saturation = (int)state["sat"];
+                    }
+                    else
+                        g.SaturationEnabled = false;
+
+                    groups.Add(g);
+
+                }
                 return "success";
             }
-            
-            return "error";
-        }
-        public async Task<String> SetInstantLightValues(Light l)
-        {
-            if (l.IsOn)
+            catch (Exception e)
             {
-                Debug.WriteLine(l.Hue);
-                var json = await nwh.SetLightInfo(l.ID, $"{{\"bri\": {l.Brightness},\"hue\": {(l.Hue)},\"sat\": {l.Saturation}, \"transitiontime\" : 0}}");
-                Debug.WriteLine(json);
-                return "success";
+                Debug.WriteLine(e.StackTrace);
+                Debug.WriteLine("Could not get all groups.");
+                return "error";
             }
-
-            return "error";
         }
 
-        public async void SetLightValues(List<Light> lights)
+        public async Task<String> Lights(ObservableCollection<Light> lights)
         {
-            lights.ForEach(l => SetLightValues(l));
-        }
 
-        public async Task<String> GetAllLights(ObservableCollection<Light> alllights)
-        {
-           // List<Light> lightlist = new List<Light>();
+            //List<Light> _lights = new List<Light>();
+
             try {
-                var json = await nwh.AllLights();
+                var json = await NetworkHandler.Lights();
                 JObject o = JObject.Parse(json);
                 foreach(var i in o)
                 {
                     var light = o["" + i.Key];
                     var state = light["state"];
-                    if ((String)light["type"] != "Dimmable light")
+
+                    Light l = new LightSingle(Int32.Parse(i.Key), (string)light["name"], (string)light["type"]);
+
+                    l.IsOn = ((string)state["on"]).ToLower() == "true" ? true : false;
+
+                    //Hue
+                    if (!state["hue"].IsNullOrEmpty())
                     {
-                        alllights.Add(new Light() { api = this, ID = Int32.Parse(i.Key), Brightness = (int)state["bri"], SaturationEnabled = true, HueEnabled = true, IsOn = ((string)state["on"]).ToLower() == "true" ? true : false, Hue = (int)state["hue"], Saturation = (int)state["sat"], Name = (string)light["name"], Type = (string)light["type"] });
+                        l.HueEnabled = true;
+                        l.Hue = (int)state["hue"];
                     }
                     else
+                        l.HueEnabled = false;
+
+                    //Brightness
+                    if (!state["bri"].IsNullOrEmpty())
                     {
-                        alllights.Add(new Light() { api = this, ID = Int32.Parse(i.Key), Brightness = (int)state["bri"], SaturationEnabled = false,HueEnabled = false,IsOn = ((string)state["on"]).ToLower() == "true" ? true : false, Hue =0, Saturation = 0, Name = (string)light["name"], Type = (string)light["type"] });
-                    }//Debug.WriteLine("Added light number " + i + " " + state["on"]);
+                        l.BrightnessEnabled = true;
+                        l.Brightness = (int)state["bri"];
+                    }
+                    else
+                        l.BrightnessEnabled = false;
+
+                    //Saturation
+                    if (!state["sat"].IsNullOrEmpty())
+                    {
+                        l.SaturationEnabled = true;
+                        l.Saturation = (int)state["sat"];
+                    }
+                    else
+                        l.SaturationEnabled = false;
+
+                    lights.Add(l);
                 }
+
+                //if(_lights.Count > 0)
+                //{
+               //     _lights.OrderBy(l => l.Name);
+                //    lights = new ObservableCollection<Light>(_lights);
+                //}
+
                 return "success";
             }
             catch(Exception e)
@@ -133,6 +226,27 @@ namespace HueUWP
             }
         }
 
+        public async void DiscoMode(ObservableCollection<Light> lights)
+        {
+            discomode = true;
+            Random rnd = new Random();
+            while (discomode)
+            {
+                lights.ToList().Where(l => l.IsOn == true).ToList().ForEach(l =>
+                {
+                    l.Hue = rnd.Next(0, 65535);
+                    l.Brightness = rnd.Next(214, 254);
+                    l.Saturation = 254;
+                    l.SetColor(true);
+                });
+                await Task.Delay(TimeSpan.FromMilliseconds(lights.Count * 100));
+            }
 
+        }
+
+        public async void DiscoMode(bool on)
+        {
+            discomode = on;
+        }
     }
 }

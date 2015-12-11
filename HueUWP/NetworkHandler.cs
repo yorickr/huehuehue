@@ -11,15 +11,12 @@ namespace HueUWP
 {
     public class NetworkHandler
     {
-        //string (string) MainPage.LOCAL_SETTINGS.Values["ip"];
-        //int (int)MainPage.LOCAL_SETTINGS.Values["port"];
         public NetworkHandler()
         {
-            //this.(string) MainPage.LOCAL_SETTINGS.Values["ip"] = (string) MainPage.LOCAL_SETTINGS.Values["(string) MainPage.LOCAL_SETTINGS.Values["ip"]"];
-            //this.(int)MainPage.LOCAL_SETTINGS.Values["port"] = (int)MainPage.LOCAL_SETTINGS.Values["(int)MainPage.LOCAL_SETTINGS.Values["port"]"];
+
         }
 
-        private async Task<String> Put(string path, string json)
+        private static async Task<String> Put(string path, string json)
         {
             var cts = new CancellationTokenSource();
             cts.CancelAfter(5000);
@@ -31,7 +28,7 @@ namespace HueUWP
                 HttpClient client = new HttpClient();
                 HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application /json");
 
-                Uri uriLampState = new Uri($"http://{(string) MainPage.LOCAL_SETTINGS.Values["ip"]}:{(int)MainPage.LOCAL_SETTINGS.Values["port"]}/api/" + path);
+                Uri uriLampState = new Uri($"http://{(string) App.LOCAL_SETTINGS.Values["ip"]}:{(int)App.LOCAL_SETTINGS.Values["port"]}/api/" + path);
                 var response = await client.PutAsync(uriLampState, content).AsTask(cts.Token);
 
                 if (!response.IsSuccessStatusCode)
@@ -53,7 +50,7 @@ namespace HueUWP
         }
 
 
-        private async Task<String> Post(string path, string json)
+        private static async Task<String> Post(string path, string json)
         {
             var cts = new CancellationTokenSource();
             cts.CancelAfter(5000);
@@ -63,7 +60,7 @@ namespace HueUWP
                 HttpClient client = new HttpClient();
                 HttpStringContent content = new HttpStringContent(json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application /json");
 
-                Uri uriLampState = new Uri($"http://{(string) MainPage.LOCAL_SETTINGS.Values["ip"]}:{(int)MainPage.LOCAL_SETTINGS.Values["port"]}/api/" + path);
+                Uri uriLampState = new Uri($"http://{(string) App.LOCAL_SETTINGS.Values["ip"]}:{(int)App.LOCAL_SETTINGS.Values["port"]}/api/" + path);
                 var response = await client.PostAsync(uriLampState, content).AsTask(cts.Token);
 
                 if (!response.IsSuccessStatusCode)
@@ -84,7 +81,7 @@ namespace HueUWP
             }
         }
 
-        private async Task<String> Get(string path)
+        private static async Task<String> Get(string path)
         {
             var cts = new CancellationTokenSource();
             cts.CancelAfter(5000);
@@ -94,7 +91,7 @@ namespace HueUWP
                 HttpClient client = new HttpClient();
                 //HttpStringContent content = new HttpStringContent($"{{\"devicetype\":\"Test#Test\"}}", Windows.Storage.Streams.UnicodeEncoding.Utf8, "application /json");
 
-                Uri uriLampState = new Uri($"http://{(string) MainPage.LOCAL_SETTINGS.Values["ip"]}:{(int)MainPage.LOCAL_SETTINGS.Values["port"]}/api/" + path);
+                Uri uriLampState = new Uri($"http://{(string) App.LOCAL_SETTINGS.Values["ip"]}:{(int)App.LOCAL_SETTINGS.Values["port"]}/api/" + path);
                 var response = await client.GetAsync(uriLampState).AsTask(cts.Token);
 
                 if (!response.IsSuccessStatusCode)
@@ -115,14 +112,46 @@ namespace HueUWP
             }
         }
 
-        public async Task<String> SetLightInfo(int lightid, string json)
+        public static async Task<String> Lights()
         {
-            var response = await Put($"{(String)MainPage.LOCAL_SETTINGS.Values["id"]}/lights/{lightid}/state", json);
+            var response = await Get($"{(String)App.LOCAL_SETTINGS.Values["id"]}/lights");
+            if (string.IsNullOrEmpty(response))
+                return "error";
+            return response;
+        }
+
+        public static async Task<String> Light(int id)
+        {
+            var response = await Get($"{(String)App.LOCAL_SETTINGS.Values["id"]}/lights/{id}");
+            if (string.IsNullOrEmpty(response))
+                return "error";
+            return response;
+        }
+
+        public static async Task<String> SetLight(int lightid, string json)
+        {
+            var response = await Put($"{(String)App.LOCAL_SETTINGS.Values["id"]}/lights/{lightid}/state", json);
+            return response;
+        }
+
+        public static async Task<String> SetLight(int lightid, bool state)
+        {
+            string json = $"{{\"on\": { ((state) ? "true" : "false") }}}";
+            var response = await Put($"{(String)App.LOCAL_SETTINGS.Values["id"]}/lights/{lightid}/state", json);
+            return response;
+        }
+
+        public static async Task<String> SetLight(int lightid, int hue, int saturation, int brightness, bool instant = false)
+        {
+            string json = $"{{\"hue\": {(hue)},\"bri\": {brightness},\"sat\": {saturation} {(instant ? ",\"transitiontime\":0" : "")}}}";
+            var response = await Put($"{(String)App.LOCAL_SETTINGS.Values["id"]}/lights/{lightid}/state", json);
             return response;
         }
 
 
-        public async Task<String> RegisterName(string AppName, string UserName)
+
+
+        public static async Task<String> RegisterName(string AppName, string UserName)
         {
             var response = await Post("",$"{{\"devicetype\":\"{AppName}#{UserName}\"}}");
             if (string.IsNullOrEmpty(response))
@@ -130,11 +159,42 @@ namespace HueUWP
             return response;
         }
 
-        public async Task<String> AllLights()
+
+
+
+        public static async Task<String> Groups()
         {
-            var response = await Get($"{(String)MainPage.LOCAL_SETTINGS.Values["id"]}/lights");
+            var response = await Get($"{(String)App.LOCAL_SETTINGS.Values["id"]}/groups");
             if (string.IsNullOrEmpty(response))
                 return "error";
+            return response;
+        }
+
+        public static async Task<String> Group(int id)
+        {
+            var response = await Get($"{(String)App.LOCAL_SETTINGS.Values["id"]}/groups/{id}");
+            if (string.IsNullOrEmpty(response))
+                return "error";
+            return response;
+        }
+
+        public static async Task<String> SetGroup(int groupid, string json)
+        {
+            var response = await Put($"{(String)App.LOCAL_SETTINGS.Values["id"]}/groups/{groupid}", json);
+            return response;
+        }
+
+        public static async Task<String> SetGroup(int groupid, bool state)
+        {
+            string json = $"{{\"on\": { ((state) ? "true" : "false") }}}";
+            var response = await Put($"{(String)App.LOCAL_SETTINGS.Values["id"]}/groups/{groupid}", json);
+            return response;
+        }
+
+        public static async Task<String> SetGroup(int groupid, int hue, int saturation, int brightness, bool instant = false)
+        {
+            string json = $"{{\"hue\": {(hue)},\"bri\": {brightness},\"sat\": {saturation} {(instant ? ",\"transitiontime\":0" : "")}}}";
+            var response = await Put($"{(String)App.LOCAL_SETTINGS.Values["id"]}/groups/{groupid}", json);
             return response;
         }
 

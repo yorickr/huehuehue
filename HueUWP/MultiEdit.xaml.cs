@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using HueUWP.Helpers;
+using HueUWP.Lights;
+using HueUWP.Views;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,7 +28,7 @@ namespace HueUWP
     public sealed partial class MultiEdit : Page
     {
         IList<Light> lights = new List<Light>();
-        MainPage main;
+        LightsView main;
 
         public MultiEdit()
         {
@@ -34,18 +37,18 @@ namespace HueUWP
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            main = e.Parameter as MainPage;
+            main = e.Parameter as LightsView;
 
-            HueSlider.Value = ((Light) main.GetListView().SelectedItems[0]).Hue;
-            SaturationSlider.Value = ((Light)main.GetListView().SelectedItems[0]).Saturation;
-            BrightnessSlider.Value = ((Light)main.GetListView().SelectedItems[0]).Brightness;
-            OnOffButton.IsOn = ((Light)main.GetListView().SelectedItems[0]).IsOn;
+            HueSlider.Value = 0;
+            SaturationSlider.Value = 0;
+            BrightnessSlider.Value = 0;
+            OnOffButton.IsOn = false;
 
-            foreach (var v in main.GetListView().SelectedItems)
-            {
-                Light l = (Light)v;
-                lights.Add(l);
-            }
+            //foreach (var v in main.GetListView().SelectedItems)
+            //{
+            //    Light l = (Light)v;
+            //    lights.Add(l);
+            //}
 
             LightsSelectedField.Text = lights.ToDelimitedString(l => l.Name);
         }
@@ -58,25 +61,25 @@ namespace HueUWP
 
         private void Slider_Released(object sender, PointerRoutedEventArgs e)
         {
-            foreach(var l in lights)
+            foreach (var l in lights)
             {
-                l.Hue = HueSlider.Value;
-                l.Saturation = SaturationSlider.Value;
-                l.Brightness = BrightnessSlider.Value;
+                l.Hue = (int)HueSlider.Value;
+                l.Saturation = (int)SaturationSlider.Value;
+                l.Brightness = (int)BrightnessSlider.Value;
                 ColorRectangle.Fill = new SolidColorBrush(ColorUtil.getColor(l));
-                l.UpdateColor();
+                l.SetColor();
             }
         }
 
         private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             ToggleSwitch button = ((ToggleSwitch)sender);
-            foreach(var l in lights)
+            foreach (var l in lights)
             {
-                
-                l.UpdateState(button.IsOn);
+
+                l.SetState();
             }
-                
+
         }
     }
 }
