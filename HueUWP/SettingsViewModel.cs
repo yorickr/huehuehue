@@ -20,19 +20,25 @@ namespace HueUWP
 
         public string IP
         {
-            get { Debug.WriteLine(App.LOCAL_SETTINGS.Values["ip"]); return App.LOCAL_SETTINGS.Values["ip"] as string; }
+            get { return App.LOCAL_SETTINGS.Values["ip"] as string; }
             set { App.LOCAL_SETTINGS.Values["ip"] = value; NotifyPropertyChanged(nameof(IP));  }
         }
 
         public string PORT
         {
-            get { Debug.WriteLine(App.LOCAL_SETTINGS.Values["port"]); return Convert.ToInt32(App.LOCAL_SETTINGS.Values["port"]).ToString(); }
+            get { return Convert.ToInt32(App.LOCAL_SETTINGS.Values["port"]).ToString(); }
             set { App.LOCAL_SETTINGS.Values["port"] = int.Parse(value); NotifyPropertyChanged(nameof(PORT)); }
+        }
+
+        public bool AUTOREFRESH
+        {
+            get { return (bool)(App.LOCAL_SETTINGS.Values["autorefresh"]); }
+            set { App.LOCAL_SETTINGS.Values["autorefresh"] = value; NotifyPropertyChanged(nameof(AUTOREFRESH)); }
         }
 
         public string ID
         {
-            get { Debug.WriteLine(App.LOCAL_SETTINGS.Values["id"]); return App.LOCAL_SETTINGS.Values["id"] as string; }
+            get { return App.LOCAL_SETTINGS.Values["id"] as string; }
         }
 
         public void Update()
