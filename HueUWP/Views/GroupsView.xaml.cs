@@ -50,9 +50,24 @@ namespace HueUWP.Views
             QuietReloadGroups();
         }
 
+        private void StartTimer()
+        {
+            if ((bool)App.LOCAL_SETTINGS.Values["autorefresh"])
+            {
+                QuietReloadGroups();
+                timer.Start();
+            }
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ReloadGroups();
+            if (e.NavigationMode == NavigationMode.New)
+                ReloadGroups();
+            else
+            {
+                GroupsList.SelectedItems.Clear();
+                StartTimer();
+            }
             this.DataContext = GroupsViewModel;
         }
 
@@ -79,7 +94,7 @@ namespace HueUWP.Views
             else
             {
                 FeedbackPanel.Visibility = Visibility.Collapsed;
-                timer.Start();
+                StartTimer();
             }
 
             Loading.IsActive = false;

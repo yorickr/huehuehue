@@ -180,21 +180,21 @@ namespace HueUWP
 
         public static async Task<String> SetGroup(int groupid, string json)
         {
-            var response = await Put($"{(String)App.LOCAL_SETTINGS.Values["id"]}/groups/{groupid}", json);
+            var response = await Put($"{(String)App.LOCAL_SETTINGS.Values["id"]}/groups/{groupid}/action", json);
             return response;
         }
 
         public static async Task<String> SetGroup(int groupid, bool state)
         {
             string json = $"{{\"on\": { ((state) ? "true" : "false") }}}";
-            var response = await Put($"{(String)App.LOCAL_SETTINGS.Values["id"]}/groups/{groupid}", json);
+            var response = await Put($"{(String)App.LOCAL_SETTINGS.Values["id"]}/groups/{groupid}/action", json);
             return response;
         }
 
         public static async Task<String> SetGroup(int groupid, int hue, int saturation, int brightness, bool instant = false)
         {
             string json = $"{{\"hue\": {(hue)},\"bri\": {brightness},\"sat\": {saturation} {(instant ? ",\"transitiontime\":0" : "")}}}";
-            var response = await Put($"{(String)App.LOCAL_SETTINGS.Values["id"]}/groups/{groupid}", json);
+            var response = await Put($"{(String)App.LOCAL_SETTINGS.Values["id"]}/groups/{groupid}/action", json);
             return response;
         }
 
